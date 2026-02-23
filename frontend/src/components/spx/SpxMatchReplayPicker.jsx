@@ -44,7 +44,7 @@ const MatchChip = ({ match, index, isSelected, isPrimary, isBest, onClick }) => 
       {/* Rank badge */}
       <span className={`
         w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold
-        ${isSelected ? 'bg-white text-slate-900' : 'bg-slate-100 text-slate-600'}
+        ${isSelected ? 'bg-white text-slate-900' : isBest ? 'bg-emerald-200 text-emerald-800' : 'bg-slate-100 text-slate-600'}
       `}>
         {index + 1}
       </span>
