@@ -142,47 +142,38 @@ const MetricRow = ({ label, value, valueColor, tooltip }) => (
 );
 
 /**
- * Phase badge with full name
+ * Phase badge with full name - text only
  */
 const PhaseBadge = ({ phase }) => {
   const phaseMap = {
-    'ACCUMULATION': { bg: 'bg-emerald-100', text: 'text-emerald-700', label: 'Accumulation' },
-    'DISTRIBUTION': { bg: 'bg-amber-100', text: 'text-amber-700', label: 'Distribution' },
-    'MARKUP': { bg: 'bg-blue-100', text: 'text-blue-700', label: 'Markup' },
-    'MARKDOWN': { bg: 'bg-red-100', text: 'text-red-700', label: 'Markdown' },
-    'RECOVERY': { bg: 'bg-cyan-100', text: 'text-cyan-700', label: 'Recovery' },
-    'CAPITULATION': { bg: 'bg-rose-100', text: 'text-rose-700', label: 'Capitulation' },
+    'ACCUMULATION': { text: 'text-emerald-600', label: 'Accumulation' },
+    'DISTRIBUTION': { text: 'text-amber-600', label: 'Distribution' },
+    'MARKUP': { text: 'text-blue-600', label: 'Markup' },
+    'MARKDOWN': { text: 'text-red-600', label: 'Markdown' },
+    'RECOVERY': { text: 'text-cyan-600', label: 'Recovery' },
+    'CAPITULATION': { text: 'text-rose-600', label: 'Capitulation' },
   };
   
-  const config = phaseMap[phase] || { bg: 'bg-slate-100', text: 'text-slate-600', label: phase };
+  const config = phaseMap[phase] || { text: 'text-slate-600', label: phase };
   
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-semibold ${config.bg} ${config.text}`}>
+    <span className={`text-xs font-semibold ${config.text}`}>
       {config.label}
     </span>
   );
 };
 
 /**
- * Data status badge
+ * Data status badge - text only
  */
 const DataStatusBadge = ({ isReal, matchCount, quality }) => {
   const isRealData = isReal && matchCount > 0 && quality >= 0.5;
   
   return (
     <Tip text={isRealData ? TOOLTIPS.realData : TOOLTIPS.fallback}>
-      <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
-        isRealData 
-          ? 'bg-emerald-50 border border-emerald-200 text-emerald-700' 
-          : 'bg-amber-50 border border-amber-200 text-amber-700'
-      }`}>
-        {isRealData ? (
-          <CheckCircle className="w-3.5 h-3.5" />
-        ) : (
-          <AlertTriangle className="w-3.5 h-3.5" />
-        )}
-        <span>{isRealData ? 'REAL DATA' : 'FALLBACK'}</span>
-      </div>
+      <span className={`text-xs font-semibold ${isRealData ? 'text-emerald-600' : 'text-amber-600'}`}>
+        {isRealData ? 'REAL DATA' : 'FALLBACK'}
+      </span>
     </Tip>
   );
 };
