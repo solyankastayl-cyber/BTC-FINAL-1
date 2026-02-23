@@ -32,7 +32,6 @@ export function HorizonMatrix({ horizonMatrix, focus, onFocusChange }) {
   return (
     <div style={{
       borderRadius: '12px',
-      border: '1px solid #e5e5e5',
       overflow: 'hidden',
       background: '#fff'
     }}>

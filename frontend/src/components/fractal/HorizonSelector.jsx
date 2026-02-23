@@ -33,8 +33,7 @@ export function HorizonSelector({ set, focus, onSetChange, onFocusChange }) {
       gap: '12px',
       padding: '16px',
       background: '#fafafa',
-      borderRadius: '12px',
-      border: '1px solid #e5e5e5'
+      borderRadius: '12px'
     }}>
       {/* Set Toggle */}
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
