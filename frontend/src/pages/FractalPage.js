@@ -385,7 +385,7 @@ const FractalTerminal = ({ asset = 'BTC' }) => {
       <header className="bg-white border-b border-slate-200">
         <div className="flex items-center justify-between px-6 py-4">
           <h1 className="text-xl font-bold text-slate-900">
-            BTC Fractal
+            {config.title}
           </h1>
           <AsOfDatePicker 
             asOf={asOf}
