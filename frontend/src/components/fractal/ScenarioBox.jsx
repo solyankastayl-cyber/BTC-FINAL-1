@@ -71,7 +71,7 @@ function ScenarioCard({
   
   return (
     <div 
-      className={`flex-1 p-3 rounded-lg ${bgColor} transition-all ${isHighlighted ? 'ring-2 ring-blue-400' : ''}`}
+      className={`flex-1 p-3 rounded-lg ${bgColor} transition-all`}
       data-testid={`scenario-card-${label.toLowerCase()}`}
       title={`${label}: This ${isBear ? 'reflects lower 10% historical outcomes' : isBull ? 'represents upper 10% historical outcomes' : 'is the median projection based on matched structures'}`}
     >
