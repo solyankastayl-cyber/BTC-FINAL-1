@@ -190,7 +190,7 @@ const MatchesList = ({ matches, focus }) => {
   }
   
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-4" data-testid="matches-list">
+    <div className="bg-white rounded-lg p-4" data-testid="matches-list">
       <div className="text-xs font-semibold text-slate-500 uppercase mb-3">
         Top Matches ({matches.length})
       </div>
