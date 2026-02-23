@@ -288,11 +288,11 @@ export function RiskBox({
   
   return (
     <div 
-      className="bg-white rounded-xl p-5"
+      className="bg-white rounded-xl p-4"
       data-testid="risk-box"
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider">
           Risk & Position
         </h3>
@@ -307,10 +307,12 @@ export function RiskBox({
         )}
       </div>
       
-      {/* Risk Header */}
-      <RiskHeader 
+      {/* Combined Risk + Position Block */}
+      <CombinedRiskPosition 
         riskLevel={riskLevel}
         volRegime={volRegime}
+        sizing={sizing}
+        constitution={constitution}
         driftStatus={driftStatus}
       />
       
@@ -318,13 +320,6 @@ export function RiskBox({
       <DrawdownStats 
         avgMaxDD={scenario?.avgMaxDD}
         tailRiskP95={scenario?.tailRiskP95}
-      />
-      
-      {/* Position Sizing */}
-      <PositionSizing 
-        sizing={sizing}
-        constitution={constitution}
-        driftStatus={driftStatus}
       />
     </div>
   );
