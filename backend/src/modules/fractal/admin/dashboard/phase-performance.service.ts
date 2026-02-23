@@ -529,8 +529,13 @@ export class PhasePerformanceService {
         resolvedCount++;
         const ret = outcome.realizedReturn;
         
-        // Detect phase at snapshot time
-        const phase = await this.getPhaseForDate(symbol, snap.asOf);
+        // Get phase: first from snapshot field, then detect from candles
+        let phase: PhaseType;
+        if ((snap as any).phase) {
+          phase = (snap as any).phase as PhaseType;
+        } else {
+          phase = await this.getPhaseForDate(symbol, snap.asOf);
+        }
         
         // Get divergence score if available (from metrics or default)
         const divergenceScore = snap.metrics?.similarityMean 
