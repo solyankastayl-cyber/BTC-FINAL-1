@@ -236,7 +236,7 @@ function PositionSizing({ sizing, blockers, constitution, driftStatus }) {
         
         {/* Trading Disabled Tooltip */}
         {showTooltip && hasBlockers && (
-          <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 w-72 p-3 bg-slate-800 rounded-lg shadow-xl text-white text-xs">
+          <div className="absolute right-0 bottom-full mb-2 z-50 w-72 p-3 bg-slate-800 rounded-lg shadow-xl text-white text-xs">
             <div className="flex items-center gap-2 mb-2 text-red-400 font-semibold">
               <Ban className="w-4 h-4" />
               Trading Disabled
