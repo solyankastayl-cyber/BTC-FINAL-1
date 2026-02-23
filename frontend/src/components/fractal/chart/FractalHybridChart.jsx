@@ -458,7 +458,7 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
   return (
     <div className="px-4 py-3 bg-white" data-testid="match-picker">
       {/* Section Title */}
-      <h3 className="text-sm font-medium text-slate-700 mb-2">
+      <h3 className="text-sm font-medium text-slate-700 mb-2 normal-case">
         <Tooltip text="Historical periods with similar market conditions. Click to see what happened after each pattern.">
           Historical Matches
         </Tooltip>
