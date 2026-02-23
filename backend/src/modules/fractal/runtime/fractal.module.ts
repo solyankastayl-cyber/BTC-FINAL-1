@@ -22,6 +22,7 @@ import { fractalOverlayRoutes } from '../api/fractal.overlay.routes.js';
 import { fractalStrategyRoutes } from '../api/fractal.strategy.routes.js';
 import { strategyBacktestRoutes } from '../strategy/strategy.backtest.routes.js';
 import { forwardEquityRoutes } from '../strategy/forward/forward.routes.js';
+import { testSnapshotRoutes } from '../strategy/forward/test-snapshot.routes.js';
 import { snapshotWriterRoutes } from '../lifecycle/snapshot.writer.routes.js';
 import { outcomeResolverRoutes } from '../lifecycle/outcome.resolver.routes.js';
 import { fractalJobRoutes } from '../jobs/fractal.job.routes.js';
