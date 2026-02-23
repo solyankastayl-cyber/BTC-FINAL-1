@@ -75,6 +75,9 @@ export interface SignalSnapshotDocument extends Document {
     matchCount: number;
   };
   
+  // Market phase (for performance analysis)
+  phase?: 'MARKUP' | 'MARKDOWN' | 'RECOVERY' | 'ACCUMULATION' | 'CAPITULATION' | 'DISTRIBUTION' | 'UNKNOWN';
+  
   // Governance
   governance: {
     guardMode: GuardMode;
