@@ -225,35 +225,6 @@ function PositionSizing({ sizing, showAdvanced, onToggleAdvanced }) {
           </div>
         )}
       </div>
-      
-      {/* Advanced Toggle */}
-      <button
-        onClick={onToggleAdvanced}
-        className="flex items-center gap-1 mt-2 text-xs text-slate-400 hover:text-slate-600 transition-colors"
-      >
-        {showAdvanced ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-        {showAdvanced ? 'Hide' : 'Show'} Sizing Formula
-      </button>
-      
-      {/* Advanced Breakdown */}
-      {showAdvanced && (
-        <div className="mt-3 p-3 bg-slate-100 rounded-lg text-xs font-mono">
-          <div className="text-slate-500 mb-2">Formula: {formula}</div>
-          <div className="space-y-1">
-            {breakdown.map((b, i) => (
-              <div key={i} className="flex items-center justify-between">
-                <span className="text-slate-600">{b.factor}</span>
-                <span className={`font-bold ${
-                  b.severity === 'CRITICAL' ? 'text-red-600' :
-                  b.severity === 'WARNING' ? 'text-amber-600' : 'text-emerald-600'
-                }`}>
-                  ×{b.multiplier.toFixed(2)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
