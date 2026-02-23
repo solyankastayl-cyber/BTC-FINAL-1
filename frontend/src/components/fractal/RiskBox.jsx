@@ -33,36 +33,33 @@ function RiskHeader({ riskLevel, volRegime, driftStatus }) {
     NORMAL: { 
       icon: Shield, 
       color: 'text-emerald-600', 
-      bg: 'bg-emerald-50', 
-      border: 'border-emerald-200',
+      bg: 'bg-emerald-50/50', 
       label: 'NORMAL',
       description: 'Standard market conditions'
     },
     ELEVATED: { 
       icon: AlertTriangle, 
       color: 'text-amber-600', 
-      bg: 'bg-amber-50', 
-      border: 'border-amber-200',
+      bg: 'bg-amber-50/50', 
       label: 'ELEVATED',
       description: 'Increased caution advised'
     },
     CRISIS: { 
       icon: AlertOctagon, 
       color: 'text-red-600', 
-      bg: 'bg-red-50', 
-      border: 'border-red-200',
+      bg: 'bg-red-50/50', 
       label: 'CRISIS',
       description: 'High risk environment'
     },
   };
   
   const volConfigs = {
-    LOW: { color: 'text-emerald-600', bg: 'bg-emerald-100' },
-    MEDIUM: { color: 'text-blue-600', bg: 'bg-blue-100' },
-    HIGH: { color: 'text-amber-600', bg: 'bg-amber-100' },
-    CRISIS: { color: 'text-red-600', bg: 'bg-red-100' },
-    CONTRACTION: { color: 'text-emerald-600', bg: 'bg-emerald-100' },
-    EXPANSION: { color: 'text-amber-600', bg: 'bg-amber-100' },
+    LOW: { color: 'text-emerald-600' },
+    MEDIUM: { color: 'text-blue-600' },
+    HIGH: { color: 'text-amber-600' },
+    CRISIS: { color: 'text-red-600' },
+    CONTRACTION: { color: 'text-emerald-600' },
+    EXPANSION: { color: 'text-amber-600' },
   };
   
   const riskConfig = riskConfigs[riskLevel] || riskConfigs.NORMAL;
@@ -70,7 +67,7 @@ function RiskHeader({ riskLevel, volRegime, driftStatus }) {
   const RiskIcon = riskConfig.icon;
   
   return (
-    <div className={`flex items-center justify-between p-4 rounded-xl ${riskConfig.bg} ${riskConfig.border} border-2`}>
+    <div className={`flex items-center justify-between p-4 rounded-lg ${riskConfig.bg}`}>
       <div className="flex items-center gap-3">
         <RiskIcon className={`w-8 h-8 ${riskConfig.color}`} />
         <div>
@@ -82,15 +79,15 @@ function RiskHeader({ riskLevel, volRegime, driftStatus }) {
       </div>
       
       <div className="flex items-center gap-4">
-        {/* Vol Regime Badge */}
-        <div className={`px-3 py-1.5 rounded-lg ${volConfig.bg}`}>
+        {/* Vol Regime */}
+        <div className="text-right">
           <div className="text-[10px] text-slate-500 uppercase">Vol Regime</div>
           <div className={`text-sm font-bold ${volConfig.color}`}>{volRegime || 'MEDIUM'}</div>
         </div>
         
         {/* Drift Status (if present) */}
         {driftStatus && driftStatus !== 'OK' && (
-          <div className="px-3 py-1.5 rounded-lg bg-amber-100">
+          <div className="text-right">
             <div className="text-[10px] text-slate-500 uppercase">Drift</div>
             <div className="text-sm font-bold text-amber-600">{driftStatus}</div>
           </div>
