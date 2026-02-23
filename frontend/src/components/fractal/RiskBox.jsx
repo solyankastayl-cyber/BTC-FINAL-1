@@ -146,7 +146,9 @@ function DrawdownStats({ avgMaxDD, tailRiskP95 }) {
 // POSITION SIZING
 // ═══════════════════════════════════════════════════════════════
 
-function PositionSizing({ sizing, showAdvanced, onToggleAdvanced }) {
+function PositionSizing({ sizing, blockers, constitution, driftStatus }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  
   if (!sizing) return null;
   
   const { 
@@ -155,10 +157,26 @@ function PositionSizing({ sizing, showAdvanced, onToggleAdvanced }) {
     sizeLabel = 'NONE', 
     breakdown = [],
     explain = [],
-    blockers = [],
+    blockers: sizingBlockers = [],
     formula,
     mode
   } = sizing;
+  
+  // Combine all blockers for tooltip
+  const allBlockers = [...(sizingBlockers || [])];
+  if (constitution?.status === 'BLOCK') allBlockers.push('CONSTITUTION_BLOCK');
+  if (driftStatus === 'CRITICAL') allBlockers.push('DRIFT_CRITICAL');
+  
+  const blockerExplain = {
+    'LOW_CONFIDENCE': 'Model confidence too low',
+    'HIGH_ENTROPY': 'High prediction uncertainty',
+    'VOL_CRISIS': 'Volatility in crisis mode',
+    'EXTREME_VOL_SPIKE': 'Extreme volatility spike detected',
+    'CONSTITUTION_BLOCK': 'Risk guardrails activated',
+    'DRIFT_CRITICAL': 'Model drift critical',
+    'NO_SIGNAL': 'No clear trading signal',
+    'CONFLICT_HIGH': 'High horizon conflict',
+  };
   
   // Determine color based on size
   let sizeColor = 'text-emerald-600';
@@ -184,6 +202,8 @@ function PositionSizing({ sizing, showAdvanced, onToggleAdvanced }) {
   // If no critical reasons, use explain
   const displayReasons = topReasons.length > 0 ? topReasons : explain.slice(0, 3);
   
+  const hasBlockers = allBlockers.length > 0;
+  
   return (
     <div className="mt-4">
       {/* Main Size Display */}
@@ -202,11 +222,36 @@ function PositionSizing({ sizing, showAdvanced, onToggleAdvanced }) {
             </div>
           </div>
           
-          {/* Size Badge */}
-          <div className={`px-4 py-2 rounded-lg ${sizeBg}`}>
-            <span className={`text-lg font-mono font-bold ${sizeColor}`}>
+          {/* Size Badge with Tooltip */}
+          <div 
+            className={`px-4 py-2 rounded-lg ${sizeBg} relative cursor-help`}
+            onMouseEnter={() => hasBlockers && setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <span className={`text-lg font-bold ${sizeColor}`}>
               {finalSize.toFixed(2)}x
             </span>
+            
+            {/* Trading Disabled Tooltip */}
+            {showTooltip && hasBlockers && (
+              <div className="absolute right-0 top-full mt-2 z-50 w-64 p-3 bg-slate-800 rounded-lg shadow-xl text-white text-xs">
+                <div className="flex items-center gap-2 mb-2 text-red-400 font-semibold">
+                  <Ban className="w-4 h-4" />
+                  Trading Disabled
+                </div>
+                <div className="space-y-1.5">
+                  {allBlockers.map((blocker, i) => (
+                    <div key={i} className="flex items-center gap-2 text-slate-300">
+                      <XCircle className="w-3 h-3 text-red-400" />
+                      <span>{blockerExplain[blocker] || blocker}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-2 pt-2 border-t border-slate-600 text-slate-400">
+                  Position sizing at 0% until conditions improve
+                </div>
+              </div>
+            )}
           </div>
         </div>
         
