@@ -71,7 +71,7 @@ function SignalCard({ signal, consensus, dispersion }) {
   
   return (
     <div 
-      className={`flex-1 min-w-[140px] p-4 rounded-xl border ${config.bg} ${config.border} transition-all hover:shadow-sm`}
+      className={`flex-1 min-w-[140px] p-4 rounded-xl ${config.bg} transition-all hover:shadow-sm`}
       title={tooltip}
       data-testid="signal-card"
     >
