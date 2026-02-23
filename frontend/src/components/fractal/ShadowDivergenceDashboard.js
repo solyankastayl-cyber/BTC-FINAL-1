@@ -702,8 +702,7 @@ const styles = {
   card: {
     padding: 12,
     backgroundColor: '#fff',
-    borderRadius: 8,
-    border: '1px solid #e5e7eb'
+    borderRadius: 8
   },
   cardLabel: {
     display: 'block',
