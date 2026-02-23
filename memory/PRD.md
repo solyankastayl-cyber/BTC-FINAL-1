@@ -91,6 +91,23 @@ Complete redesign of `FractalHybridChart.jsx` components:
 ## Key Files Modified
 - `/app/frontend/src/components/fractal/chart/FractalHybridChart.jsx` - Main hybrid panel components
 
+### Session 5: Green Highlight for Best Fractal (2026-02-23) ✅
+Added green highlighting for the best fractal (first in list with highest similarity):
+
+**FractalHybridChart.jsx (MatchPicker):**
+- Already had `isBest` logic with `text-emerald-600` ✅
+
+**OverlayMatchPicker.jsx (Replay tab):**
+- Added `isBest` check for index 0
+- Color #059669 (emerald-600) applied to best match
+- Tooltip: "Best match (highest similarity)"
+
+**SpxMatchReplayPicker.jsx:**
+- Added `isBest` prop to MatchChip component
+- Best match has green background (`bg-emerald-50`), border (`border-emerald-300`), badge rank (`bg-emerald-200`)
+- BEST badge instead of AUTO badge
+- SpxMatchReplayChipsCompact also updated
+
 ## Next Action Items
 - [ ] User testing and feedback
 - [ ] Check other admin panel tabs for remaining border/shadow issues
