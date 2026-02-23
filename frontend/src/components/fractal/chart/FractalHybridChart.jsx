@@ -360,13 +360,11 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
 }
 
 /**
- * Agreement Section - Human-readable divergence metrics
- * Replaces technical RMSE/MAPE with understandable explanations
+ * Agreement Section - Compact metrics with tooltips
  */
 function AgreementSection({ divergence }) {
   const { rmse, corr, terminalDelta, directionalMismatch, samplePoints, flags } = divergence;
   
-  // Determine agreement level
   const getAgreementLevel = () => {
     if (rmse <= 5 && corr >= 0.7) return { label: 'Strong', color: '#22c55e' };
     if (rmse <= 15 && corr >= 0.4) return { label: 'Moderate', color: '#f59e0b' };
@@ -379,58 +377,49 @@ function AgreementSection({ divergence }) {
   return (
     <div style={styles.agreementContainer}>
       <div style={styles.agreementHeader}>
-        <span style={styles.agreementTitle}>Agreement between Model and Replay</span>
-        <span style={{ ...styles.agreementLevel, color: agreement.color }}>
-          {agreement.label}
-        </span>
+        <span style={styles.agreementTitle}>Model vs History</span>
+        <span style={{ ...styles.agreementLevel, color: agreement.color }}>{agreement.label}</span>
       </div>
       
       <div style={styles.agreementGrid}>
-        <AgreementMetric 
-          label="Divergence" 
-          value={rmse != null ? `${rmse.toFixed(1)}%` : '—'}
-          hint="Lower = stronger agreement"
-          warning={rmse > 20}
-        />
-        <AgreementMetric 
-          label="Correlation" 
-          value={corr?.toFixed(2) || '—'}
-          hint="Higher = more aligned"
-          warning={corr < 0.3}
-        />
-        <AgreementMetric 
-          label="Direction Match" 
-          value={directionalMismatch != null ? `${(100 - directionalMismatch).toFixed(0)}%` : '—'}
-          hint="Days where both agree on direction"
-          warning={directionalMismatch > 55}
-        />
-        <AgreementMetric 
-          label="Terminal Difference" 
-          value={terminalDelta != null ? `${terminalDelta >= 0 ? '+' : ''}${terminalDelta.toFixed(1)}%` : '—'}
-          hint="End-point difference"
-          warning={Math.abs(terminalDelta || 0) > 20}
-        />
+        <div style={styles.agreementMetric} title="Lower divergence = better agreement">
+          <div style={styles.metricLabel}>Diverge</div>
+          <div style={{ ...styles.metricValue, color: rmse > 20 ? '#ef4444' : '#374151' }}>
+            {rmse?.toFixed(1) || '—'}%
+          </div>
+        </div>
+        <div style={styles.agreementMetric} title="Correlation (1.0 = perfect match)">
+          <div style={styles.metricLabel}>Corr</div>
+          <div style={{ ...styles.metricValue, color: corr < 0.3 ? '#ef4444' : corr >= 0.5 ? '#22c55e' : '#374151' }}>
+            {corr?.toFixed(2) || '—'}
+          </div>
+        </div>
+        <div style={styles.agreementMetric} title="Days where model and replay agree on direction">
+          <div style={styles.metricLabel}>Direction</div>
+          <div style={styles.metricValue}>
+            {directionalMismatch != null ? `${(100 - directionalMismatch).toFixed(0)}%` : '—'}
+          </div>
+        </div>
+        <div style={styles.agreementMetric} title="Difference between endpoints">
+          <div style={styles.metricLabel}>End Diff</div>
+          <div style={styles.metricValue}>
+            {terminalDelta != null ? `${terminalDelta >= 0 ? '+' : ''}${terminalDelta.toFixed(1)}%` : '—'}
+          </div>
+        </div>
       </div>
 
-      {/* Risk Indicators */}
       {hasWarnings && flags?.length > 0 && (
         <div style={styles.warningsRow}>
           {flags.filter(f => f !== 'PERFECT_MATCH').map((flag, i) => (
-            <span key={i} style={styles.warningBadge}>
-              {formatWarningFlag(flag)}
-            </span>
+            <span key={i} style={styles.warningBadge}>{formatWarningFlag(flag)}</span>
           ))}
         </div>
       )}
       
-      {flags?.includes('PERFECT_MATCH') && (
-        <div style={styles.perfectMatch}>
-          Strong alignment between Model and Replay
-        </div>
-      )}
-
-      {/* Sample size info */}
-      <div style={styles.sampleInfo}>
+      <div style={styles.sampleInfo}>Based on {samplePoints || 30} data points</div>
+    </div>
+  );
+}
         Analysis based on {samplePoints || '—'} data points
       </div>
     </div>
