@@ -124,6 +124,9 @@ export async function registerFractalModule(fastify: FastifyInstance, deps?: Par
 
   // Register Forward Equity routes (BLOCK 56.4 - Forward Truth Performance)
   await fastify.register(forwardEquityRoutes);
+  
+  // Register Test Snapshot routes (BLOCK 56.6 - Test Data Generation)
+  await fastify.register(testSnapshotRoutes);
 
   // Register certification routes (BLOCK 41.x)
   await fastify.register(fractalCertRoutes);
