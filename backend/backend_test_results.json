@@ -1,40 +1,52 @@
 {
-  "timestamp": "2026-02-22T22:06:12.561174",
+  "timestamp": "2026-02-23T11:16:44.602187",
   "summary": {
-    "passed": 5,
-    "total": 5,
-    "success_rate": "100.0%"
+    "passed": 0,
+    "total": 7,
+    "success_rate": "0.0%"
   },
   "tests": [
     {
       "test_name": "Health Check",
-      "passed": true,
-      "details": "Status: 200, Response: {\"ok\":true,\"mode\":\"FRACTAL_ONLY\",\"timestamp\":\"2026-02-22T22:06:09.237Z\"}",
-      "timestamp": "2026-02-22T22:06:09.237614"
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=10)",
+      "timestamp": "2026-02-23T11:11:29.189859"
+    },
+    {
+      "test_name": "Strategy Endpoint (All Modes)",
+      "passed": false,
+      "details": "conservative: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30); balanced: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30); aggressive: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T11:13:00.035337"
+    },
+    {
+      "test_name": "Forward Equity Endpoint (All Params)",
+      "passed": false,
+      "details": "BALANCED-7D: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30); CONSERVATIVE-14D: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30); AGGRESSIVE-30D: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T11:14:30.893040"
     },
     {
       "test_name": "Fractal Overlay Basic",
-      "passed": true,
-      "details": "Symbol: BTC, Matches: 10",
-      "timestamp": "2026-02-22T22:06:09.850360"
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T11:15:01.520766"
     },
     {
       "test_name": "Fractal Overlay 30D Horizon",
-      "passed": true,
-      "details": "Matches: 10, Aftermath length: 30",
-      "timestamp": "2026-02-22T22:06:10.413043"
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T11:15:32.142462"
     },
     {
       "test_name": "Fractal Overlay 180D Horizon",
-      "passed": true,
-      "details": "Matches: 10, Aftermath length: 180",
-      "timestamp": "2026-02-22T22:06:10.978354"
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T11:16:02.782320"
     },
     {
       "test_name": "Fractal Overlay 365D Horizon",
-      "passed": true,
-      "details": "Matches: 10, Aftermath length: 365, Distribution series length: 365",
-      "timestamp": "2026-02-22T22:06:11.557780"
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T11:16:33.402611"
     }
   ]
 }
