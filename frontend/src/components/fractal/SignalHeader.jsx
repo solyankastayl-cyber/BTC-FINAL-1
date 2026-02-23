@@ -115,7 +115,7 @@ function ConfidenceCard({ confidence, reliability, entropy }) {
   
   return (
     <div 
-      className={`flex-1 min-w-[140px] p-4 rounded-xl border ${bg} ${border} transition-all hover:shadow-sm`}
+      className={`flex-1 min-w-[140px] p-4 rounded-xl ${bg} transition-all hover:shadow-sm`}
       title={tooltip}
       data-testid="confidence-card"
     >
