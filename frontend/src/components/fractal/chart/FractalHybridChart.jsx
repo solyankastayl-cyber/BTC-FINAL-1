@@ -371,7 +371,7 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
       {/* Model vs History - Human-readable metrics */}
       {divergence && (
         <div className="pt-3 border-t border-slate-100">
-          <h3 className="text-sm font-medium text-slate-700 mb-2">
+          <h3 className="text-sm font-medium text-slate-700 mb-2 normal-case">
             <Tooltip text="How well the AI model agrees with historical pattern behavior">
               Model vs History
             </Tooltip>
