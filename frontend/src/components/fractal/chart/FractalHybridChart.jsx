@@ -611,66 +611,19 @@ const styles = {
 };
 
 /**
-    fontSize: 14,
-    fontWeight: 700,
-    marginBottom: 2,
-  },
-  metricHint: {
-    fontSize: 9,
-    color: '#9ca3af',
-  },
-  warningsRow: {
-    display: 'flex',
-    gap: 8,
-    marginTop: 10,
-    flexWrap: 'wrap',
-  },
-  warningBadge: {
-    padding: '4px 10px',
-    backgroundColor: '#fef3c7',
-    border: '1px solid #fcd34d',
-    borderRadius: 6,
-    fontSize: 10,
-    fontWeight: 500,
-    color: '#92400e',
-  },
-  perfectMatch: {
-    marginTop: 10,
-    padding: '8px 12px',
-    backgroundColor: '#dcfce7',
-    border: '1px solid #86efac',
-    borderRadius: 6,
-    fontSize: 11,
-    fontWeight: 500,
-    color: '#166534',
-    textAlign: 'center',
-  },
-  sampleInfo: {
-    fontSize: 10,
-    color: '#9ca3af',
-    textAlign: 'right',
-    marginTop: 8,
-  },
-};
-
-/**
- * BLOCK 73.4 — Interactive Match Picker (UX REFACTOR)
- * 
- * Human-readable historical match selector.
- * Shows full phase names instead of abbreviations.
+ * BLOCK 73.4 — Interactive Match Picker
  */
 
-// Phase mapping for human-readable labels
 const PHASE_MAP = {
-  ACC: { label: 'Accumulation', color: 'bg-blue-100 text-blue-700', bgColor: '#dbeafe', textColor: '#1d4ed8' },
-  ACCUMULATION: { label: 'Accumulation', color: 'bg-blue-100 text-blue-700', bgColor: '#dbeafe', textColor: '#1d4ed8' },
-  DIS: { label: 'Distribution', color: 'bg-yellow-100 text-yellow-700', bgColor: '#fef3c7', textColor: '#b45309' },
-  DISTRIBUTION: { label: 'Distribution', color: 'bg-yellow-100 text-yellow-700', bgColor: '#fef3c7', textColor: '#b45309' },
-  REC: { label: 'Recovery', color: 'bg-green-100 text-green-700', bgColor: '#dcfce7', textColor: '#166534' },
-  RECOVERY: { label: 'Recovery', color: 'bg-green-100 text-green-700', bgColor: '#dcfce7', textColor: '#166534' },
-  MAR: { label: 'Markdown', color: 'bg-red-100 text-red-700', bgColor: '#fee2e2', textColor: '#dc2626' },
-  MARKDOWN: { label: 'Markdown', color: 'bg-red-100 text-red-700', bgColor: '#fee2e2', textColor: '#dc2626' },
-  MARKUP: { label: 'Markup', color: 'bg-emerald-100 text-emerald-700', bgColor: '#d1fae5', textColor: '#059669' },
+  ACC: { label: 'Accumulation', bgColor: '#dbeafe', textColor: '#1d4ed8' },
+  ACCUMULATION: { label: 'Accumulation', bgColor: '#dbeafe', textColor: '#1d4ed8' },
+  DIS: { label: 'Distribution', bgColor: '#fef3c7', textColor: '#b45309' },
+  DISTRIBUTION: { label: 'Distribution', bgColor: '#fef3c7', textColor: '#b45309' },
+  REC: { label: 'Recovery', bgColor: '#dcfce7', textColor: '#166534' },
+  RECOVERY: { label: 'Recovery', bgColor: '#dcfce7', textColor: '#166534' },
+  MAR: { label: 'Markdown', bgColor: '#fee2e2', textColor: '#dc2626' },
+  MARKDOWN: { label: 'Markdown', bgColor: '#fee2e2', textColor: '#dc2626' },
+  MARKUP: { label: 'Markup', bgColor: '#d1fae5', textColor: '#059669' },
 };
 
 function getPhaseInfo(phase) {
