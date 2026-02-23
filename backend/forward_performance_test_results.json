@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-02-23T12:33:06.895322",
+  "summary": {
+    "passed": 0,
+    "total": 7,
+    "success_rate": "0.0%"
+  },
+  "tests": [
+    {
+      "test_name": "Health Check",
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=10)",
+      "timestamp": "2026-02-23T12:25:27.981904"
+    },
+    {
+      "test_name": "Generate Snapshots Endpoint",
+      "passed": false,
+      "details": "HTTP 520: <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-",
+      "timestamp": "2026-02-23T12:26:29.097750"
+    },
+    {
+      "test_name": "Snapshot Stats Endpoint",
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T12:27:00.208077"
+    },
+    {
+      "test_name": "Forward Equity Response Structure",
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T12:27:31.352458"
+    },
+    {
+      "test_name": "Forward Equity All Presets",
+      "passed": false,
+      "details": "CONSERVATIVE-7D: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30); CONSERVATIVE-14D: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30); CONSERVATIVE-30D: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30); BALANCED-7D: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30); BALANCED-14D: Error HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30) ... and 5 more",
+      "timestamp": "2026-02-23T12:32:03.616759"
+    },
+    {
+      "test_name": "Preset Mode Calculations Differ",
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T12:32:34.763933"
+    },
+    {
+      "test_name": "Clear Snapshots Endpoint (Test Symbol)",
+      "passed": false,
+      "details": "Error: HTTPSConnectionPool(host='fractal-logic-update-3.preview.emergentagent.com', port=443): Read timed out. (read timeout=30)",
+      "timestamp": "2026-02-23T12:33:05.895154"
+    }
+  ]
+}
