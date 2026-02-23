@@ -229,15 +229,6 @@ export function ForwardPerformanceCompact({
   );
 }
 
-function MetricItem({ label, value, color }) {
-  return (
-    <div style={styles.metricItem}>
-      <span style={styles.metricLabel}>{label}</span>
-      <span style={{ ...styles.metricValue, color }}>{value}</span>
-    </div>
-  );
-}
-
 const styles = {
   container: {
     backgroundColor: '#fff',
