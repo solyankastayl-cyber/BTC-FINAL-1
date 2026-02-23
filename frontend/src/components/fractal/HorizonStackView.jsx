@@ -242,7 +242,6 @@ const styles = {
     fontWeight: '700',
     padding: '3px 8px',
     borderRadius: '4px',
-    border: '1px solid',
     display: 'inline-block',
   },
   tierLabel: {
