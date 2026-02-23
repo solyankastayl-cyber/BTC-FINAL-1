@@ -108,7 +108,7 @@ export function FractalAnalysisPanel({ forecast, overlay, matches, focus }) {
         <span className="text-slate-300">|</span>
         <Tip text={TIPS.dd}>
           <span className="text-slate-500">
-            Avg DD: <span className="font-semibold text-red-600">{(avgDD * 100).toFixed(1)}%</span>
+            Max Pullback: <span className="font-semibold text-red-600">{(avgDD * 100).toFixed(1)}%</span>
           </span>
         </Tip>
       </div>
