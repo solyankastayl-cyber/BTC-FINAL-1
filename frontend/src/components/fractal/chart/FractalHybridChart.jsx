@@ -451,73 +451,164 @@ function formatWarningFlag(flag) {
 // Old DivergenceDetails removed - now using AgreementSection above
 
 const styles = {
-  // Main container - compact
+  // Main container - very compact
   container: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: '12px 16px',
-    marginTop: 8,
+    borderRadius: 8,
+    padding: '10px 12px',
+    marginTop: 6,
   },
-  // Header styles - compact
   header: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
-    paddingBottom: 8,
-    borderBottom: '1px solid #f3f4f6',
+    marginBottom: 8,
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
   },
   headerRight: {
     display: 'flex',
     alignItems: 'center',
-    gap: 12,
+    gap: 10,
   },
   title: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: 600,
-    color: '#1f2937',
+    color: '#374151',
   },
   horizonBadge: {
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: 500,
     color: '#6b7280',
     backgroundColor: '#f3f4f6',
-    padding: '3px 8px',
-    borderRadius: 4,
+    padding: '2px 6px',
+    borderRadius: 3,
   },
   currentPrice: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#6b7280',
   },
   qualityBadge: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 6,
-    padding: '4px 10px',
-    backgroundColor: '#f0f9ff',
-    borderRadius: 6,
-  },
-  qualityLabel: {
-    fontSize: 9,
-    color: '#0369a1',
-    textTransform: 'uppercase',
-  },
-  qualityValue: {
-    fontSize: 12,
-    fontWeight: 700,
+    fontSize: 10,
+    fontWeight: 600,
     color: '#0284c7',
+    backgroundColor: '#f0f9ff',
+    padding: '3px 8px',
+    borderRadius: 4,
   },
-  // Projection grid - 2 column layout, compact
+  // Projection grid - inline
   projectionGrid: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: 10,
-    marginBottom: 10,
+    gap: 8,
+    marginBottom: 8,
+  },
+  projectionBlock: {
+    backgroundColor: '#fafafa',
+    borderRadius: 6,
+    padding: '8px 10px',
+    cursor: 'help',
+  },
+  blockHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 5,
+    marginBottom: 4,
+  },
+  blockTitle: {
+    fontSize: 10,
+    fontWeight: 600,
+    color: '#374151',
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: '50%',
+  },
+  returnValue: {
+    fontSize: 18,
+    fontWeight: 700,
+    lineHeight: 1,
+  },
+  targetPrice: {
+    fontSize: 11,
+    color: '#4b5563',
+    marginTop: 2,
+  },
+  matchInfo: {
+    fontSize: 9,
+    color: '#9ca3af',
+    marginTop: 2,
+  },
+  noData: {
+    fontSize: 10,
+    color: '#9ca3af',
+    fontStyle: 'italic',
+  },
+  // Agreement section - inline
+  agreementContainer: {
+    backgroundColor: '#f9fafb',
+    borderRadius: 6,
+    padding: '8px 10px',
+  },
+  agreementHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  agreementTitle: {
+    fontSize: 10,
+    fontWeight: 600,
+    color: '#374151',
+  },
+  agreementLevel: {
+    fontSize: 10,
+    fontWeight: 700,
+  },
+  agreementGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: 6,
+  },
+  agreementMetric: {
+    textAlign: 'center',
+  },
+  metricLabel: {
+    fontSize: 8,
+    color: '#6b7280',
+    textTransform: 'uppercase',
+    marginBottom: 1,
+  },
+  metricValue: {
+    fontSize: 12,
+    fontWeight: 700,
+    color: '#374151',
+  },
+  warningsRow: {
+    display: 'flex',
+    gap: 4,
+    marginTop: 6,
+    flexWrap: 'wrap',
+  },
+  warningBadge: {
+    fontSize: 8,
+    padding: '2px 6px',
+    backgroundColor: '#fef3c7',
+    color: '#d97706',
+    borderRadius: 3,
+    fontWeight: 500,
+  },
+  sampleInfo: {
+    fontSize: 8,
+    color: '#9ca3af',
+    marginTop: 6,
+    textAlign: 'right',
+  },
+};
   },
   projectionBlock: {
     backgroundColor: '#fafafa',
