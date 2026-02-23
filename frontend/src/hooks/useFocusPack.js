@@ -47,8 +47,9 @@ export const getTierLabel = (tier) => {
  * useFocusPack - Fetches focus-specific terminal data
  * BLOCK 73.5.2: Added phaseId parameter for phase filtering
  * BLOCK U2: Added asOf parameter for simulation mode
+ * UNIFIED: Added asset parameter for multi-asset support
  * 
- * @param {string} symbol - Trading symbol (BTC)
+ * @param {string} symbol - Trading symbol (BTC, SPX)
  * @param {string} focus - Horizon focus ('7d'|'14d'|'30d'|'90d'|'180d'|'365d')
  * @param {object} options - { phaseId, asOf, mode }
  * @returns {{ data, loading, error, refetch, setPhaseId, setAsOf }}
@@ -88,13 +89,23 @@ export function useFocusPack(symbol = 'BTC', focus = '30d', options = {}) {
     setError(null);
     
     try {
-      let url = `${API_BASE}/api/fractal/v2.1/focus-pack?symbol=${symbol}&focus=${focus}`;
-      if (currentPhaseId) {
-        url += `&phaseId=${encodeURIComponent(currentPhaseId)}`;
-      }
-      // BLOCK U2: As-of date support
-      if (currentAsOf) {
-        url += `&asOf=${encodeURIComponent(currentAsOf)}`;
+      // UNIFIED: Use different endpoints for BTC vs SPX
+      let url;
+      if (symbol === 'SPX') {
+        // SPX uses new unified endpoint
+        url = `${API_BASE}/api/fractal/spx?focus=${focus}`;
+        if (currentAsOf) {
+          url += `&asOf=${encodeURIComponent(currentAsOf)}`;
+        }
+      } else {
+        // BTC uses legacy endpoint
+        url = `${API_BASE}/api/fractal/v2.1/focus-pack?symbol=${symbol}&focus=${focus}`;
+        if (currentPhaseId) {
+          url += `&phaseId=${encodeURIComponent(currentPhaseId)}`;
+        }
+        if (currentAsOf) {
+          url += `&asOf=${encodeURIComponent(currentAsOf)}`;
+        }
       }
       
       const response = await fetch(url, { signal });
@@ -105,7 +116,16 @@ export function useFocusPack(symbol = 'BTC', focus = '30d', options = {}) {
       
       const result = await response.json();
       
-      if (result.ok && result.focusPack) {
+      // UNIFIED: Handle both response formats
+      if (symbol === 'SPX' && result.ok && result.data) {
+        // SPX returns { ok, data: FractalSignalContract }
+        // Transform to focusPack format for compatibility
+        const spxData = transformSpxToFocusPack(result.data, focus);
+        cacheRef.current[cacheKey] = spxData;
+        setData(spxData);
+        setError(null);
+      } else if (result.ok && result.focusPack) {
+        // BTC format
         cacheRef.current[cacheKey] = result.focusPack;
         setData(result.focusPack);
         setError(null);
