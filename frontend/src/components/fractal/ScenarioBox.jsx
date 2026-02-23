@@ -71,38 +71,27 @@ function ScenarioCard({
   
   return (
     <div 
-      className={`flex-1 min-w-[160px] p-4 rounded-lg ${bgColor} transition-all ${isHighlighted ? 'ring-2 ring-blue-400' : ''}`}
+      className={`flex-1 p-3 rounded-lg ${bgColor} transition-all ${isHighlighted ? 'ring-2 ring-blue-400' : ''}`}
       data-testid={`scenario-card-${label.toLowerCase()}`}
       title={`${label}: This ${isBear ? 'reflects lower 10% historical outcomes' : isBull ? 'represents upper 10% historical outcomes' : 'is the median projection based on matched structures'}`}
     >
-      {/* Header - NO percentile shown */}
-      <div className="mb-1">
-        <span className={`text-xs font-bold uppercase tracking-wider ${labelColor}`}>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-1">
+        <span className={`text-[10px] font-bold uppercase tracking-wider ${labelColor}`}>
           {label}
         </span>
+        <span className="text-[9px] text-slate-400">{horizonLabel}</span>
       </div>
       
-      {/* Subtitle - human readable */}
-      <div className="text-[10px] text-slate-400 mb-2">
-        {subtitle}
-      </div>
-      
-      {/* Return */}
-      <div className={`text-2xl font-bold ${textColor} mb-1`}>
+      {/* Return + Price in compact row */}
+      <div className={`text-xl font-bold ${textColor}`}>
         {formatReturn(returnPct)}
       </div>
-      
-      {/* Target Price */}
-      <div className="flex items-center gap-1 mb-2">
-        <Target className={`w-3.5 h-3.5 ${labelColor}`} />
-        <span className={`text-lg font-semibold ${textColor}`}>
+      <div className="flex items-center gap-1">
+        <Target className={`w-3 h-3 ${labelColor}`} />
+        <span className={`text-sm font-semibold ${textColor}`}>
           {formatPrice(targetPrice)}
         </span>
-      </div>
-      
-      {/* Horizon */}
-      <div className="text-xs text-slate-400">
-        {horizonLabel}
       </div>
     </div>
   );
