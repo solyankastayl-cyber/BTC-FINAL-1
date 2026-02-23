@@ -496,89 +496,44 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
 
 /**
  * BLOCK 73.5.2 — Phase Filter Bar
- * 
- * Shows when a phase is selected (clicked).
- * Displays phase context and clear button.
+ * Clean indicator when phase filter is active
  */
 function PhaseFilterBar({ phaseFilter, phaseStats, onClear }) {
   if (!phaseFilter?.active) return null;
   
-  const phaseInfo = PHASE_MAP[phaseFilter.phaseType] || { label: phaseFilter.phaseType, bgColor: '#f4f4f5', textColor: '#52525b' };
-  
-  const phaseColors = {
-    'ACCUMULATION': { bg: '#dcfce7', border: '#22c55e', text: '#166534' },
-    'MARKUP': { bg: '#dbeafe', border: '#3b82f6', text: '#1d4ed8' },
-    'DISTRIBUTION': { bg: '#fef3c7', border: '#f59e0b', text: '#b45309' },
-    'MARKDOWN': { bg: '#fce7f3', border: '#ec4899', text: '#9d174d' },
-    'RECOVERY': { bg: '#cffafe', border: '#06b6d4', text: '#0891b2' },
-    'CAPITULATION': { bg: '#fee2e2', border: '#ef4444', text: '#dc2626' },
-  };
-  
-  const colors = phaseColors[phaseFilter.phaseType] || { bg: '#f4f4f5', border: '#a1a1aa', text: '#52525b' };
+  const phaseLabel = getPhaseLabel(phaseFilter.phaseType);
   
   return (
     <div 
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '12px 18px',
-        backgroundColor: colors.bg,
-        borderBottom: `2px solid ${colors.border}`,
-      }}
+      className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-slate-200"
       data-testid="phase-filter-bar"
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <span style={{
-          backgroundColor: colors.border,
-          color: '#fff',
-          padding: '5px 12px',
-          borderRadius: 6,
-          fontSize: 12,
-          fontWeight: 600,
-        }}>
-          {phaseInfo.label}
+      <div className="flex items-center gap-3 text-sm">
+        <span className="font-medium text-slate-700">
+          Filtered by: {phaseLabel}
         </span>
-        <span style={{ fontSize: 13, color: colors.text, fontWeight: 500 }}>
-          Phase Filter Active
+        <span className="text-slate-500">
+          {phaseFilter.filteredMatchCount} matches
         </span>
-        <span style={{ fontSize: 12, color: '#6b7280' }}>
-          {phaseFilter.filteredMatchCount} matches in {phaseInfo.label.toLowerCase()} phase
-        </span>
+        {phaseStats && (
+          <>
+            <span className="text-slate-300">·</span>
+            <span className="text-slate-500">
+              Avg: <span className={phaseStats.phaseReturnPct >= 0 ? 'text-emerald-600' : 'text-red-600'}>
+                {phaseStats.phaseReturnPct >= 0 ? '+' : ''}{phaseStats.phaseReturnPct?.toFixed(1)}%
+              </span>
+            </span>
+          </>
+        )}
       </div>
       
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        {phaseStats && (
-          <span style={{ fontSize: 12, color: '#4b5563' }}>
-            Avg Return: <span style={{ 
-              fontWeight: 600, 
-              color: phaseStats.phaseReturnPct >= 0 ? '#16a34a' : '#dc2626' 
-            }}>
-              {phaseStats.phaseReturnPct >= 0 ? '+' : ''}{phaseStats.phaseReturnPct?.toFixed(1)}%
-            </span>
-            <span style={{ color: '#9ca3af', margin: '0 6px' }}>|</span>
-            Avg Duration: {phaseStats.durationDays}d
-          </span>
-        )}
-        <button
-          onClick={onClear}
-          data-testid="clear-phase-filter"
-          style={{
-            padding: '6px 14px',
-            backgroundColor: '#fff',
-            border: '1px solid #d1d5db',
-            borderRadius: 6,
-            fontSize: 12,
-            fontWeight: 500,
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-          }}
-          onMouseOver={(e) => { e.target.style.backgroundColor = '#f3f4f6'; }}
-          onMouseOut={(e) => { e.target.style.backgroundColor = '#fff'; }}
-        >
-          Clear Filter
-        </button>
-      </div>
+      <button
+        onClick={onClear}
+        data-testid="clear-phase-filter"
+        className="text-sm text-slate-500 hover:text-slate-700 cursor-pointer"
+      >
+        Clear
+      </button>
     </div>
   );
 }
