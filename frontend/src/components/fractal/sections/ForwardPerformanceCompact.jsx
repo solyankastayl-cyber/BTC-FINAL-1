@@ -226,9 +226,9 @@ export function ForwardPerformanceCompact({
   );
 }
 
-function MetricPill({ label, value, color }) {
+function MetricItem({ label, value, color }) {
   return (
-    <div style={styles.metricPill}>
+    <div style={styles.metricItem}>
       <span style={styles.metricLabel}>{label}</span>
       <span style={{ ...styles.metricValue, color }}>{value}</span>
     </div>
@@ -240,14 +240,14 @@ const styles = {
     backgroundColor: '#fff',
     border: '1px solid #e5e7eb',
     borderRadius: '10px',
-    padding: '16px',
+    padding: '14px 16px',
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '14px',
-    paddingBottom: '12px',
+    marginBottom: '12px',
+    paddingBottom: '10px',
     borderBottom: '1px solid #f3f4f6',
   },
   titleRow: {
@@ -267,10 +267,6 @@ const styles = {
     padding: '3px 8px',
     borderRadius: '4px',
   },
-  summary: {
-    fontSize: '11px',
-    color: '#9ca3af',
-  },
   error: {
     padding: '12px',
     backgroundColor: '#fef2f2',
@@ -285,41 +281,28 @@ const styles = {
     color: '#9ca3af',
     fontSize: '13px',
   },
-  chartWrapper: {
-    marginBottom: '14px',
+  horizontalLayout: {
+    display: 'flex',
+    gap: '20px',
+    alignItems: 'stretch',
+  },
+  chartSection: {
+    flex: '1 1 auto',
+    minWidth: 0,
   },
   canvas: {
     width: '100%',
-    maxWidth: '700px',
+    maxWidth: '600px',
     border: '1px solid #f3f4f6',
     borderRadius: '6px',
   },
-  emptyState: {
+  metricsColumn: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    padding: '30px',
-    backgroundColor: '#f9fafb',
-    borderRadius: '8px',
-    marginBottom: '14px',
-  },
-  emptyText: {
-    fontSize: '13px',
-    color: '#6b7280',
-    marginBottom: '4px',
-  },
-  emptyHint: {
-    fontSize: '11px',
-    color: '#9ca3af',
-  },
-  metricsRow: {
-    display: 'flex',
     gap: '8px',
-    flexWrap: 'wrap',
+    minWidth: '120px',
   },
-  metricPill: {
-    flex: '1 1 auto',
-    minWidth: '100px',
+  metricItem: {
     backgroundColor: '#f9fafb',
     borderRadius: '6px',
     padding: '10px 14px',
@@ -336,6 +319,20 @@ const styles = {
   metricValue: {
     fontSize: '15px',
     fontWeight: '600',
+  },
+  emptyState: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '40px 20px',
+    backgroundColor: '#f9fafb',
+    borderRadius: '8px',
+    minHeight: '150px',
+  },
+  emptyText: {
+    fontSize: '13px',
+    color: '#6b7280',
   },
 };
 
