@@ -78,10 +78,10 @@ const MatchChip = ({ match, index, isSelected, isPrimary, isBest, onClick }) => 
         {match.return >= 0 ? '+' : ''}{match.return?.toFixed(1)}%
       </span>
       
-      {/* AUTO badge for primary match */}
-      {isPrimary && !isSelected && (
-        <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-blue-500 text-white text-[10px] font-bold rounded shadow">
-          AUTO
+      {/* BEST badge for top match (index 0) */}
+      {isBest && !isSelected && (
+        <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-emerald-500 text-white text-[10px] font-bold rounded shadow">
+          BEST
         </span>
       )}
       
