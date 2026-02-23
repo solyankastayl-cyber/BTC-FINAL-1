@@ -103,7 +103,7 @@ export function FractalOverlaySection({ symbol, focus = '30d' }) {
 function MatchMetricsCard({ match, loading }) {
   if (loading) {
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-4">
+      <div className="bg-white p-4">
         <div className="animate-pulse h-40 bg-slate-100 rounded"/>
       </div>
     );
@@ -111,14 +111,14 @@ function MatchMetricsCard({ match, loading }) {
   
   if (!match) {
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-4">
+      <div className="bg-white p-4">
         <div className="text-sm text-slate-500">Select a match</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4">
+    <div className="bg-white p-4">
       <div className="text-sm font-bold text-slate-700 mb-3">Match Metrics</div>
       
       <div className="space-y-2">
@@ -126,7 +126,7 @@ function MatchMetricsCard({ match, loading }) {
         <MetricRow 
           label="Phase" 
           value={
-            <span className={`px-2 py-0.5 rounded text-xs font-medium ${getPhaseColor(match.phase)}`}>
+            <span className={`text-xs font-medium ${getPhaseTextColor(match.phase)}`}>
               {PHASE_LABELS[match.phase] || match.phase}
             </span>
           }
