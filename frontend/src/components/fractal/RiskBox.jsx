@@ -126,7 +126,157 @@ function DrawdownStats({ avgMaxDD, tailRiskP95 }) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// POSITION SIZING
+// COMBINED RISK + POSITION (Compact)
+// ═══════════════════════════════════════════════════════════════
+
+function CombinedRiskPosition({ riskLevel, volRegime, sizing, constitution, driftStatus }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  
+  // Risk config
+  const RISK_CONFIG = {
+    CRISIS: { 
+      label: 'CRISIS', 
+      color: 'text-red-600', 
+      bg: 'bg-red-50',
+      icon: AlertOctagon,
+      description: 'High risk environment'
+    },
+    ELEVATED: { 
+      label: 'ELEVATED', 
+      color: 'text-amber-600', 
+      bg: 'bg-amber-50',
+      icon: AlertTriangle,
+      description: 'Elevated risk conditions'
+    },
+    NORMAL: { 
+      label: 'NORMAL', 
+      color: 'text-emerald-600', 
+      bg: 'bg-emerald-50',
+      icon: Shield,
+      description: 'Normal conditions'
+    }
+  };
+  
+  const riskConfig = RISK_CONFIG[riskLevel] || RISK_CONFIG.NORMAL;
+  const RiskIcon = riskConfig.icon;
+  
+  // Position sizing
+  const { 
+    finalSize = 0, 
+    sizeLabel = 'NONE', 
+    breakdown = [],
+    explain = [],
+    blockers: sizingBlockers = []
+  } = sizing || {};
+  
+  // Combine all blockers for tooltip
+  const allBlockers = [...(sizingBlockers || [])];
+  if (constitution?.status === 'BLOCK') allBlockers.push('CONSTITUTION_BLOCK');
+  if (driftStatus === 'CRITICAL') allBlockers.push('DRIFT_CRITICAL');
+  
+  const blockerExplain = {
+    'LOW_CONFIDENCE': 'Model confidence too low',
+    'HIGH_ENTROPY': 'High prediction uncertainty',
+    'VOL_CRISIS': 'Volatility in crisis mode',
+    'EXTREME_VOL_SPIKE': 'Extreme volatility spike detected',
+    'CONSTITUTION_BLOCK': 'Risk guardrails activated',
+    'DRIFT_CRITICAL': 'Model drift critical',
+    'NO_SIGNAL': 'No clear trading signal',
+    'CONFLICT_HIGH': 'High horizon conflict',
+  };
+  
+  const hasBlockers = allBlockers.length > 0 || finalSize <= 0;
+  
+  // Position color
+  let sizeColor = 'text-emerald-600';
+  if (finalSize <= 0) {
+    sizeColor = 'text-red-600';
+  } else if (finalSize < 0.25) {
+    sizeColor = 'text-amber-600';
+  }
+  
+  // Top reasons
+  const topReasons = breakdown
+    .filter(b => b.severity === 'CRITICAL' || b.multiplier < 0.5)
+    .slice(0, 3)
+    .map(b => b.note);
+  const displayReasons = topReasons.length > 0 ? topReasons : (explain || []).slice(0, 3);
+  
+  return (
+    <div 
+      className={`p-3 rounded-lg ${riskConfig.bg} relative`}
+      onMouseEnter={() => hasBlockers && setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+    >
+      {/* Top Row: Risk + Position */}
+      <div className="flex items-center justify-between">
+        {/* Left: Risk Level */}
+        <div className="flex items-center gap-2">
+          <RiskIcon className={`w-5 h-5 ${riskConfig.color}`} />
+          <div>
+            <div className={`text-sm font-bold ${riskConfig.color}`}>
+              Risk: {riskConfig.label}
+            </div>
+            <div className="text-[10px] text-slate-500">{riskConfig.description}</div>
+          </div>
+        </div>
+        
+        {/* Right: Position Size */}
+        <div className="text-right cursor-help">
+          <div className="text-[10px] text-slate-500 uppercase">Position</div>
+          <div className={`text-lg font-bold ${sizeColor}`}>
+            {finalSize > 0 ? `${(finalSize * 100).toFixed(0)}%` : 'NO TRADE'}
+            <span className="text-xs font-normal text-slate-400 ml-1">
+              {finalSize.toFixed(2)}x
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      {/* Reasons (compact) */}
+      {displayReasons.length > 0 && (
+        <div className="mt-2 pt-2 border-t border-slate-200/50">
+          <div className="flex flex-wrap gap-x-3 gap-y-1">
+            {displayReasons.map((reason, i) => (
+              <span key={i} className="text-[10px] text-slate-500 flex items-center gap-1">
+                <span className="w-1 h-1 rounded-full bg-slate-400"></span>
+                {reason}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {/* Tooltip */}
+      {showTooltip && hasBlockers && (
+        <div className="absolute right-0 bottom-full mb-2 z-50 w-64 p-3 bg-slate-800 rounded-lg shadow-xl text-white text-xs">
+          <div className="flex items-center gap-2 mb-2 text-red-400 font-semibold">
+            <Ban className="w-4 h-4" />
+            Trading Disabled
+          </div>
+          <div className="space-y-1.5">
+            {allBlockers.length > 0 ? (
+              allBlockers.map((blocker, i) => (
+                <div key={i} className="flex items-center gap-2 text-slate-300">
+                  <XCircle className="w-3 h-3 text-red-400" />
+                  <span>{blockerExplain[blocker] || blocker}</span>
+                </div>
+              ))
+            ) : (
+              <div className="flex items-center gap-2 text-slate-300">
+                <XCircle className="w-3 h-3 text-red-400" />
+                <span>Position size reduced to zero</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// POSITION SIZING (kept for reference but not used)
 // ═══════════════════════════════════════════════════════════════
 
 function PositionSizing({ sizing, blockers, constitution, driftStatus }) {
