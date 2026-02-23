@@ -275,59 +275,6 @@ function PositionSizing({ sizing, blockers, constitution, driftStatus }) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// BLOCKERS
-// ═══════════════════════════════════════════════════════════════
-
-function Blockers({ blockers, constitution, driftStatus }) {
-  // Combine all blockers
-  const allBlockers = [...(blockers || [])];
-  
-  if (constitution?.status === 'BLOCK') {
-    allBlockers.push('CONSTITUTION_BLOCK');
-  }
-  
-  if (driftStatus === 'CRITICAL') {
-    allBlockers.push('DRIFT_CRITICAL');
-  }
-  
-  if (allBlockers.length === 0) return null;
-  
-  // Blocker explanations
-  const blockerExplain = {
-    'LOW_CONFIDENCE': 'Model confidence too low',
-    'HIGH_ENTROPY': 'High prediction uncertainty',
-    'VOL_CRISIS': 'Volatility in crisis mode',
-    'EXTREME_VOL_SPIKE': 'Extreme volatility spike detected',
-    'CONSTITUTION_BLOCK': 'Risk guardrails activated',
-    'DRIFT_CRITICAL': 'Model drift critical',
-    'NO_SIGNAL': 'No clear trading signal',
-    'CONFLICT_HIGH': 'High horizon conflict',
-  };
-  
-  return (
-    <div className="mt-4 p-4 bg-red-50 rounded-xl">
-      <div className="flex items-center gap-2 mb-3">
-        <Ban className="w-5 h-5 text-red-600" />
-        <span className="text-sm font-bold text-red-700 uppercase">Trading Disabled</span>
-      </div>
-      
-      <div className="space-y-2">
-        {allBlockers.map((blocker, i) => (
-          <div key={i} className="flex items-center gap-2 text-sm text-red-600">
-            <XCircle className="w-4 h-4" />
-            <span>{blockerExplain[blocker] || blocker}</span>
-          </div>
-        ))}
-      </div>
-      
-      <div className="mt-3 pt-3 border-t border-red-200 text-xs text-red-500">
-        Position sizing reduced to 0% until conditions improve
-      </div>
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════
 // MAIN RISK BOX
 // ═══════════════════════════════════════════════════════════════
 
@@ -338,8 +285,6 @@ export function RiskBox({
   constitution,
   driftStatus 
 }) {
-  const [showAdvanced, setShowAdvanced] = useState(false);
-  
   // Derive risk level from volatility and scenario
   let riskLevel = 'NORMAL';
   const volRegime = volatility?.regime;
@@ -350,9 +295,6 @@ export function RiskBox({
   } else if (volRegime === 'HIGH' || volRegime === 'EXPANSION' || avgMaxDD < -0.15) {
     riskLevel = 'ELEVATED';
   }
-  
-  // Check for active blockers
-  const hasBlockers = sizing?.blockers?.length > 0 || sizing?.mode === 'NO_TRADE';
   
   return (
     <div 
@@ -370,7 +312,7 @@ export function RiskBox({
             sizing.mode === 'CONSERVATIVE' ? 'bg-amber-100 text-amber-700' :
             'bg-emerald-100 text-emerald-700'
           }`}>
-            {sizing.mode}
+            {sizing.mode === 'NO_TRADE' ? 'NO TRADE' : sizing.mode}
           </span>
         )}
       </div>
