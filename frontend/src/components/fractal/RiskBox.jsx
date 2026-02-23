@@ -105,7 +105,7 @@ function DrawdownStats({ avgMaxDD, tailRiskP95 }) {
       >
         <div className="flex items-center gap-2 mb-2">
           <TrendingDown className="w-4 h-4 text-amber-500" />
-          <span className="text-xs text-slate-500">Avg Drawdown</span>
+          <span className="text-xs text-slate-500">Typical Pullback</span>
         </div>
         <div className="text-2xl font-bold text-amber-600">{formatPct(avgMaxDD)}</div>
         <div className="text-[10px] text-slate-400 mt-1">
