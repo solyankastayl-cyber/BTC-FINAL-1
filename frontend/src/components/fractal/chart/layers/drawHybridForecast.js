@@ -369,14 +369,7 @@ export function drawHybridForecast(
   const labelY = canvasHeight - marginBottom + 18;
   
   ctx.fillStyle = "rgba(0,0,0,0.6)";
-  ctx.fillText(`📈 Forecast: ${sign}${expectedReturn.toFixed(1)}%`, labelX, labelY);
-  
-  // Confidence (from primary match if available)
-  const confPct = primaryMatch?.confidence 
-    ? (primaryMatch.confidence * 100).toFixed(1) 
-    : '100.0';
-  ctx.fillStyle = "rgba(0,0,0,0.4)";
-  ctx.fillText(`Conf: ${confPct}%`, labelX + 130, labelY);
+  ctx.fillText(`Forecast: ${sign}${expectedReturn.toFixed(1)}%`, labelX, labelY);
   ctx.restore();
 }
 
