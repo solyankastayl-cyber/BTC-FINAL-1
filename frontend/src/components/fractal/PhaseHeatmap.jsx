@@ -128,7 +128,6 @@ function PhaseRow({ phase, isExpanded, onToggle, onPhaseClick }) {
             style={{
               padding: '4px 10px',
               backgroundColor: '#fff',
-              border: `1px solid ${gradeColor.border}`,
               borderRadius: 4,
               fontSize: 10,
               fontWeight: 600,
