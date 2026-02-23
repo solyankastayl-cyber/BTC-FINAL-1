@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-02-22T22:06:12.561174",
+  "summary": {
+    "passed": 5,
+    "total": 5,
+    "success_rate": "100.0%"
+  },
+  "tests": [
+    {
+      "test_name": "Health Check",
+      "passed": true,
+      "details": "Status: 200, Response: {\"ok\":true,\"mode\":\"FRACTAL_ONLY\",\"timestamp\":\"2026-02-22T22:06:09.237Z\"}",
+      "timestamp": "2026-02-22T22:06:09.237614"
+    },
+    {
+      "test_name": "Fractal Overlay Basic",
+      "passed": true,
+      "details": "Symbol: BTC, Matches: 10",
+      "timestamp": "2026-02-22T22:06:09.850360"
+    },
+    {
+      "test_name": "Fractal Overlay 30D Horizon",
+      "passed": true,
+      "details": "Matches: 10, Aftermath length: 30",
+      "timestamp": "2026-02-22T22:06:10.413043"
+    },
+    {
+      "test_name": "Fractal Overlay 180D Horizon",
+      "passed": true,
+      "details": "Matches: 10, Aftermath length: 180",
+      "timestamp": "2026-02-22T22:06:10.978354"
+    },
+    {
+      "test_name": "Fractal Overlay 365D Horizon",
+      "passed": true,
+      "details": "Matches: 10, Aftermath length: 365, Distribution series length: 365",
+      "timestamp": "2026-02-22T22:06:11.557780"
+    }
+  ]
+}
