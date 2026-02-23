@@ -103,13 +103,13 @@ function transformSpxToFocusPack(spxData, focus) {
       volatility: spxData.market?.volatility > 0.5 ? 'HIGH' : 'MODERATE',
     },
     
-    // Scenario pack (U6)
+    // Scenario pack (U6) - returns already in decimal format (0.05 = 5%)
     scenario: {
-      bear: { return: spxData.horizons?.[0]?.expectedReturn * -2 || -0.1, price: 0 },
+      bear: { return: (spxData.horizons?.[0]?.expectedReturn || 0) * -2, price: 0 },
       base: { return: spxData.horizons?.find(h => h.dominant)?.expectedReturn || 0, price: spxData.market?.currentPrice || 0 },
-      bull: { return: spxData.horizons?.[0]?.expectedReturn * 2 || 0.1, price: 0 },
+      bull: { return: (spxData.horizons?.[0]?.expectedReturn || 0) * 2, price: 0 },
       upside: spxData.diagnostics?.quality || 0.5,
-      avgMaxDD: spxData.risk?.maxDD_WF || 0,
+      avgMaxDD: (spxData.risk?.maxDD_WF || 0) / 100, // Normalize: 3.9 -> 0.039
     },
     
     // Price info
