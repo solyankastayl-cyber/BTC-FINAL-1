@@ -303,6 +303,8 @@ const styles = {
     borderRadius: '0',
     backgroundColor: 'transparent',
     border: 'none',
+    boxShadow: 'none',
+    outline: 'none',
   },
   actionBadge: {
     fontSize: '13px',
@@ -311,6 +313,8 @@ const styles = {
     borderRadius: '0',
     backgroundColor: 'transparent',
     border: 'none',
+    boxShadow: 'none',
+    outline: 'none',
   },
   dominantBadge: {
     fontSize: '11px',
