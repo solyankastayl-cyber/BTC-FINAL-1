@@ -15,6 +15,111 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 
 const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
 
+// ═══════════════════════════════════════════════════════════════
+// SPX → FocusPack Transformer
+// Converts FractalSignalContract to legacy focusPack format
+// ═══════════════════════════════════════════════════════════════
+
+function transformSpxToFocusPack(spxData, focus) {
+  const horizonDays = parseInt(focus.replace('d', ''), 10) || 30;
+  
+  return {
+    // Meta information
+    meta: {
+      symbol: 'SPX',
+      focus,
+      horizon: horizonDays,
+      tier: horizonDays <= 14 ? 'TIMING' : horizonDays <= 90 ? 'TACTICAL' : 'STRUCTURE',
+      generatedAt: spxData.contract?.generatedAt || new Date().toISOString(),
+      isLive: true,
+    },
+    
+    // Overlay data (matches, stats, distribution)
+    overlay: {
+      matches: spxData.explain?.topMatches?.map(m => ({
+        id: m.id,
+        date: m.date,
+        similarity: m.similarity / 100, // Normalize to 0-1
+        phase: m.phase,
+        return: m.return,
+        maxDrawdown: m.maxDrawdown,
+      })) || [],
+      stats: {
+        matchCount: spxData.explain?.topMatches?.length || 0,
+        avgSimilarity: spxData.diagnostics?.similarity / 100 || 0,
+        medianReturn: spxData.horizons?.find(h => h.dominant)?.expectedReturn || 0,
+        avgMaxDD: spxData.risk?.maxDD_WF || 0,
+        hitRate: spxData.decision?.confidence || 0,
+        p10Return: spxData.risk?.mcP95_DD || 0,
+        p90Return: spxData.horizons?.find(h => h.dominant)?.expectedReturn * 1.5 || 0,
+        entropy: spxData.diagnostics?.entropy || 0,
+      },
+      distributionSeries: spxData.chartData?.bands || {
+        p10: [], p25: [], p50: [], p75: [], p90: []
+      },
+      currentWindow: spxData.chartData?.currentWindow || {
+        raw: [], normalized: [], timestamps: []
+      },
+    },
+    
+    // Forecast data
+    forecast: {
+      path: spxData.chartData?.path || [],
+      upperBand: spxData.chartData?.forecast?.upperBand || [],
+      lowerBand: spxData.chartData?.forecast?.lowerBand || [],
+      confidenceDecay: spxData.chartData?.forecast?.confidenceDecay || [],
+      tailFloor: spxData.chartData?.forecast?.tailFloor || 0,
+      currentPrice: spxData.market?.currentPrice || spxData.chartData?.forecast?.currentPrice || 0,
+      markers: spxData.horizons?.map(h => ({
+        horizon: `${h.h}d`,
+        dayIndex: h.h,
+        expectedReturn: h.expectedReturn,
+        price: (spxData.market?.currentPrice || 0) * (1 + h.expectedReturn),
+      })) || [],
+      startTs: spxData.contract?.asofCandleTs || Date.now(),
+    },
+    
+    // Diagnostics
+    diagnostics: {
+      sampleSize: spxData.diagnostics?.sampleSize || 0,
+      effectiveN: spxData.diagnostics?.effectiveN || 0,
+      entropy: spxData.diagnostics?.entropy || 0,
+      reliability: spxData.reliability?.score || 0,
+      coverageYears: spxData.diagnostics?.coverageYears || 0,
+      qualityScore: spxData.diagnostics?.quality || 0,
+    },
+    
+    // Divergence
+    divergence: {
+      score: (spxData.reliability?.driftScore || 0) * 100,
+      terminalDelta: spxData.diagnostics?.projectionGap || 0,
+      directionalMismatch: spxData.diagnostics?.directionMatch === 0,
+    },
+    
+    // Phase info
+    phase: spxData.phaseEngine || {
+      currentPhase: spxData.market?.phase || 'NEUTRAL',
+      trend: 'NEUTRAL',
+      volatility: spxData.market?.volatility > 0.5 ? 'HIGH' : 'MODERATE',
+    },
+    
+    // Scenario pack (U6)
+    scenario: {
+      bear: { return: spxData.horizons?.[0]?.expectedReturn * -2 || -0.1, price: 0 },
+      base: { return: spxData.horizons?.find(h => h.dominant)?.expectedReturn || 0, price: spxData.market?.currentPrice || 0 },
+      bull: { return: spxData.horizons?.[0]?.expectedReturn * 2 || 0.1, price: 0 },
+      upside: spxData.diagnostics?.quality || 0.5,
+      avgMaxDD: spxData.risk?.maxDD_WF || 0,
+    },
+    
+    // Price info
+    price: {
+      current: spxData.market?.currentPrice || 0,
+      sma200: spxData.market?.sma200 || 'NEAR',
+    },
+  };
+}
+
 // Horizon metadata
 export const HORIZONS = [
   { key: '7d',   label: '7D',   tier: 'TIMING',    color: '#3B82F6' },
