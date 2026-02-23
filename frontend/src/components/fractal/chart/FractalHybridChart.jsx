@@ -272,16 +272,12 @@ export function FractalHybridChart({
 }
 
 /**
- * BLOCK 73.2 — Hybrid Summary Panel with Divergence Engine
- * UX REFACTOR — Human-readable metrics and explanations
- * 
+ * BLOCK 73.2 — Hybrid Summary Panel - COMPACT
  * Shows: Forecast (Model), Historical Replay, Agreement metrics
- * Clear structure: What model predicts vs What history suggests
  */
 function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, divergence }) {
   if (!forecast || !currentPrice) return null;
   
-  // Calculate both % returns AND absolute prices
   const syntheticEndPrice = forecast.pricePath?.length 
     ? forecast.pricePath[forecast.pricePath.length - 1]
     : currentPrice;
@@ -294,114 +290,71 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
     ? ((replayEndPrice - currentPrice) / currentPrice * 100)
     : null;
   
-  // Use backend divergence metrics if available
   const div = divergence || {};
   const score = div.score ?? null;
   
-  // Format price with K suffix for readability
   const formatPrice = (p) => {
     if (!p || isNaN(p)) return '—';
-    if (p >= 1000000) return `$${(p / 1000000).toFixed(2)}M`;
     if (p >= 1000) return `$${(p / 1000).toFixed(1)}K`;
     return `$${p.toFixed(0)}`;
   };
 
-  // Map phase to human-readable name
-  const getPhaseLabel = (phase) => {
-    const labels = {
-      'ACC': 'Accumulation',
-      'ACCUMULATION': 'Accumulation',
-      'DIS': 'Distribution', 
-      'DISTRIBUTION': 'Distribution',
-      'REC': 'Recovery',
-      'RECOVERY': 'Recovery',
-      'MAR': 'Markdown',
-      'MARKDOWN': 'Markdown',
-      'MARKUP': 'Markup',
-    };
-    return labels[phase] || phase;
-  };
-
-  // Get horizon days for display
   const horizonDays = focus.replace('d', '');
 
   return (
     <div style={styles.container} data-testid="hybrid-summary-panel">
-      {/* Header with title and quality score */}
+      {/* Compact Header */}
       <div style={styles.header}>
         <div style={styles.headerLeft}>
           <span style={styles.title}>Hybrid Projection</span>
-          <span style={styles.horizonBadge}>{horizonDays}-Day Horizon</span>
+          <span style={styles.horizonBadge}>{horizonDays}D</span>
         </div>
         <div style={styles.headerRight}>
-          <span style={styles.currentPrice}>
-            Current: {formatPrice(currentPrice)}
-          </span>
-          {/* Match Quality Score - replaces cryptic "C (67)" */}
+          <span style={styles.currentPrice}>NOW: {formatPrice(currentPrice)}</span>
           {score !== null && (
-            <div style={styles.qualityBadge} title="Composite score based on similarity, stability, volatility match and drawdown structure">
-              <span style={styles.qualityLabel}>Match Quality</span>
-              <span style={styles.qualityValue}>{score}/100</span>
-            </div>
+            <span style={styles.qualityBadge} title="Match quality based on similarity, stability, volatility alignment">
+              Quality: {score}/100
+            </span>
           )}
         </div>
       </div>
 
-      {/* Main projection grid - 2 columns for Forecast vs Replay */}
+      {/* Compact 2-column Projection Grid */}
       <div style={styles.projectionGrid}>
-        {/* Forecast (Model) Block */}
-        <div style={styles.projectionBlock}>
+        {/* Model Forecast */}
+        <div style={styles.projectionBlock} title="AI model's synthetic projection based on current market structure">
           <div style={styles.blockHeader}>
             <span style={{ ...styles.dot, backgroundColor: '#22c55e' }}></span>
-            <span style={styles.blockTitle}>Forecast (Model)</span>
+            <span style={styles.blockTitle}>Model</span>
           </div>
-          <div style={styles.blockContent}>
-            <div style={{ ...styles.returnValue, color: syntheticReturn >= 0 ? '#22c55e' : '#ef4444' }}>
-              {syntheticReturn >= 0 ? '+' : ''}{syntheticReturn.toFixed(1)}%
-            </div>
-            <div style={styles.targetPrice}>
-              Target: {formatPrice(syntheticEndPrice)}
-            </div>
+          <div style={{ ...styles.returnValue, color: syntheticReturn >= 0 ? '#22c55e' : '#ef4444' }}>
+            {syntheticReturn >= 0 ? '+' : ''}{syntheticReturn.toFixed(1)}%
           </div>
-          <div style={styles.blockFooter}>
-            Synthetic model projection based on current structure
-          </div>
+          <div style={styles.targetPrice}>→ {formatPrice(syntheticEndPrice)}</div>
         </div>
 
-        {/* Historical Replay Block */}
-        <div style={styles.projectionBlock}>
+        {/* Historical Replay */}
+        <div style={styles.projectionBlock} title={`What happened ${horizonDays} days after similar historical patterns`}>
           <div style={styles.blockHeader}>
             <span style={{ ...styles.dot, backgroundColor: '#8b5cf6' }}></span>
-            <span style={styles.blockTitle}>Historical Replay</span>
+            <span style={styles.blockTitle}>Replay</span>
           </div>
           {replayReturn !== null ? (
             <>
-              <div style={styles.blockContent}>
-                <div style={{ ...styles.returnValue, color: replayReturn >= 0 ? '#22c55e' : '#ef4444' }}>
-                  {replayReturn >= 0 ? '+' : ''}{replayReturn.toFixed(1)}%
-                </div>
-                <div style={styles.targetPrice}>
-                  Target: {formatPrice(replayEndPrice)}
-                </div>
+              <div style={{ ...styles.returnValue, color: replayReturn >= 0 ? '#22c55e' : '#ef4444' }}>
+                {replayReturn >= 0 ? '+' : ''}{replayReturn.toFixed(1)}%
               </div>
-              <div style={styles.blockFooter}>
-                <span>Matched period: {primaryMatch?.id || 'Historical'}</span>
-                <span style={styles.matchInfo}>
-                  {primaryMatch?.similarity ? `${(primaryMatch.similarity * 100).toFixed(0)}% similarity` : ''}
-                  {primaryMatch?.phase && ` · ${getPhaseLabel(primaryMatch.phase)}`}
-                </span>
-              </div>
+              <div style={styles.targetPrice}>→ {formatPrice(replayEndPrice)}</div>
+              <div style={styles.matchInfo}>{primaryMatch?.id} · {(primaryMatch?.similarity * 100).toFixed(0)}%</div>
             </>
           ) : (
-            <div style={styles.noData}>No replay data available</div>
+            <div style={styles.noData}>No data</div>
           )}
         </div>
       </div>
 
-      {/* Agreement Section - replaces cryptic "DIVERGENCE" */}
-      {divergence && (
-        <AgreementSection divergence={divergence} />
-      )}
+      {/* Compact Agreement */}
+      {divergence && <AgreementSection divergence={divergence} />}
     </div>
   );
 }
