@@ -56,7 +56,6 @@ export function GlobalStructureBar({ structure, resolver }) {
             padding: '8px 16px',
             borderRadius: '8px',
             background: biasColor.bg,
-            border: `2px solid ${biasColor.border}`,
             display: 'flex',
             alignItems: 'center',
             gap: '8px'
