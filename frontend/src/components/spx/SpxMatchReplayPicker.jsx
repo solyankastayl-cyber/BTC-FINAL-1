@@ -22,19 +22,22 @@ const PHASE_COLORS = {
 /**
  * Individual Match Chip
  */
-const MatchChip = ({ match, index, isSelected, isPrimary, onClick }) => {
+const MatchChip = ({ match, index, isSelected, isPrimary, isBest, onClick }) => {
   const phaseColor = PHASE_COLORS[match.phase] || PHASE_COLORS.NEUTRAL;
   
   return (
     <button
       onClick={onClick}
       data-testid={`spx-match-chip-${index}`}
+      title={isBest ? "Best match (highest similarity)" : "Click to replay this historical pattern"}
       className={`
         relative px-3 py-2 rounded-lg transition-all duration-200
         flex items-center gap-2 text-sm
         ${isSelected 
           ? 'bg-slate-900 text-white shadow-lg scale-105' 
-          : 'bg-white border border-slate-200 hover:border-slate-400 hover:shadow'
+          : isBest
+            ? 'bg-emerald-50 border border-emerald-300 hover:border-emerald-400 hover:shadow'
+            : 'bg-white border border-slate-200 hover:border-slate-400 hover:shadow'
         }
       `}
     >
