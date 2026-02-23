@@ -391,18 +391,9 @@ export function RiskBox({
       {/* Position Sizing */}
       <PositionSizing 
         sizing={sizing}
-        showAdvanced={showAdvanced}
-        onToggleAdvanced={() => setShowAdvanced(!showAdvanced)}
+        constitution={constitution}
+        driftStatus={driftStatus}
       />
-      
-      {/* Blockers Warning */}
-      {hasBlockers && (
-        <Blockers 
-          blockers={sizing?.blockers}
-          constitution={constitution}
-          driftStatus={driftStatus}
-        />
-      )}
     </div>
   );
 }
