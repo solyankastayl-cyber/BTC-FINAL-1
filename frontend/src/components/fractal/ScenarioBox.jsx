@@ -76,9 +76,10 @@ function ScenarioCard({
   
   return (
     <div 
-      className={`flex-1 p-3 rounded-lg ${bgColor} transition-all`}
+      className={`flex-1 p-3 rounded-lg ${bgColor} ${selectedRing} transition-all cursor-pointer hover:opacity-80`}
       data-testid={`scenario-card-${label.toLowerCase()}`}
       title={`${label}: This ${isBear ? 'reflects lower 10% historical outcomes' : isBull ? 'represents upper 10% historical outcomes' : 'is the median projection based on matched structures'}`}
+      onClick={() => onSelect && onSelect(label)}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-1">
