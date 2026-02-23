@@ -257,6 +257,11 @@ const FractalTerminal = () => {
   const [terminalLoading, setTerminalLoading] = useState(true);
   const symbol = 'BTC';
   
+  // GLOBAL STRATEGY CONTROLS - Single source of truth
+  const [strategyMode, setStrategyMode] = useState('balanced');
+  const [strategyHorizon, setStrategyHorizon] = useState(7);
+  const [strategyExecution, setStrategyExecution] = useState('ACTIVE');
+  
   // BLOCK 70.2 + 73.5.2 + U2: Use focus-specific data with phase filter and as-of support
   const { 
     data: focusData, 
