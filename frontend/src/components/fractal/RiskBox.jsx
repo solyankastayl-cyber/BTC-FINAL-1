@@ -307,10 +307,10 @@ export function RiskBox({
           Risk & Position
         </h3>
         {sizing?.mode && (
-          <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
-            sizing.mode === 'NO_TRADE' ? 'bg-red-100 text-red-700' :
-            sizing.mode === 'CONSERVATIVE' ? 'bg-amber-100 text-amber-700' :
-            'bg-emerald-100 text-emerald-700'
+          <span className={`text-[10px] font-semibold uppercase ${
+            sizing.mode === 'NO_TRADE' ? 'text-red-600' :
+            sizing.mode === 'CONSERVATIVE' ? 'text-amber-600' :
+            'text-emerald-600'
           }`}>
             {sizing.mode === 'NO_TRADE' ? 'NO TRADE' : sizing.mode}
           </span>
