@@ -28,6 +28,7 @@ import { registerSpxCrisisRoutes, registerSpxCrisisDebugRoutes } from './modules
 import { registerSpxRegimeRoutes } from './modules/spx-regime/regime.routes.js';
 import { registerLifecycleRoutes } from './modules/lifecycle/lifecycle.routes.js';
 import { registerDailyRunRoutes } from './modules/ops/daily-run/index.js';
+import { registerSpxUnifiedRoutes } from './modules/fractal/api/fractal.spx.routes.js';
 
 async function main() {
   console.log('═══════════════════════════════════════════════════════════════');
