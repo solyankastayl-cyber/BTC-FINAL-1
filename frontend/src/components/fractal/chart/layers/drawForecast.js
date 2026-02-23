@@ -336,9 +336,6 @@ export function drawForecast(
   const labelY = canvasHeight - marginBottom + 18;
   
   ctx.fillStyle = "rgba(0,0,0,0.6)";
-  ctx.fillText(`📈 Forecast: ${sign}${returnPct}%`, labelX, labelY);
-  
-  ctx.fillStyle = "rgba(0,0,0,0.4)";
-  ctx.fillText(`Conf: ${confPct}%`, labelX + 130, labelY);
+  ctx.fillText(`Forecast: ${sign}${returnPct}%`, labelX, labelY);
   ctx.restore();
 }

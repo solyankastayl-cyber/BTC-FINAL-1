@@ -1,45 +1,45 @@
 import React from "react";
 
-// Phase label mapping
-const PHASE_SHORT = {
-  ACCUMULATION: "Acc",
-  ACC: "Acc",
-  DISTRIBUTION: "Dist",
-  DIS: "Dist",
-  RECOVERY: "Rec",
-  REC: "Rec",
-  MARKDOWN: "Mark",
-  MAR: "Mark",
-  MARKUP: "Mkup",
-  MKU: "Mkup",
-  CAPITULATION: "Cap",
-  CAP: "Cap",
+// Phase label mapping - FULL names (space allows)
+const PHASE_LABELS = {
+  ACCUMULATION: "Accumulation",
+  ACC: "Accumulation",
+  DISTRIBUTION: "Distribution",
+  DIS: "Distribution",
+  RECOVERY: "Recovery",
+  REC: "Recovery",
+  MARKDOWN: "Markdown",
+  MAR: "Markdown",
+  MARKUP: "Markup",
+  MKU: "Markup",
+  CAPITULATION: "Capitulation",
+  CAP: "Capitulation",
 };
 
 export function OverlayMatchPicker({ matches, value, onChange }) {
   const top = matches.slice(0, 5);
   return (
-    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+    <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
       {top.map((m, i) => {
         const active = i === value;
-        const phaseShort = PHASE_SHORT[m.phase] || m.phase?.slice(0, 4);
+        const phaseLabel = PHASE_LABELS[m.phase] || m.phase;
         return (
           <button
             key={m.id}
             onClick={() => onChange(i)}
             data-testid={`match-picker-${i}`}
             style={{
-              padding: "6px 10px",
-              background: active ? "#000" : "#fff",
-              color: active ? "#fff" : "#000",
-              borderRadius: 8,
+              padding: "4px 0",
+              background: "transparent",
+              color: active ? "#1f2937" : "#6b7280",
+              border: "none",
               cursor: "pointer",
-              fontSize: 11,
+              fontSize: 13,
               fontWeight: active ? 600 : 400,
               transition: "all 0.15s ease"
             }}
           >
-            #{i + 1} · {phaseShort} · {(m.similarity * 100).toFixed(0)}%
+            {i + 1} · {phaseLabel} · {(m.similarity * 100).toFixed(0)}%
           </button>
         );
       })}
