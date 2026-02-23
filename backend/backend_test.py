@@ -282,6 +282,8 @@ class FractalBackendTester:
         # Test order - critical tests first
         test_methods = [
             self.test_health_check,
+            self.test_strategy_endpoint,  # NEW - Critical for Strategy Controls
+            self.test_forward_equity_endpoint,  # NEW - Critical for Forward Performance
             self.test_fractal_overlay_basic,
             self.test_fractal_overlay_horizon_30d,
             self.test_fractal_overlay_horizon_180d,
