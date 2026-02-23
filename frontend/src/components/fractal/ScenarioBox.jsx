@@ -309,17 +309,20 @@ export function ScenarioBox({ scenario }) {
             targetPrice={c.targetPrice}
             horizonLabel={c.horizonLabel}
             basePrice={basePrice}
-            isHighlighted={c.label === 'Base'}
+            isSelected={c.label === selectedCase}
+            onSelect={setSelectedCase}
           />
         ))}
       </div>
       
-      {/* Range Strip */}
+      {/* Range Strip - shows selected scenario focus */}
       <RangeStrip 
         p10={targets?.p10}
         p50={targets?.p50}
         p90={targets?.p90}
         basePrice={basePrice}
+        selectedCase={selectedCase}
+        selectedTarget={selectedCaseData?.targetPrice}
       />
       
       {/* Outcome Stats */}
