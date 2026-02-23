@@ -292,18 +292,20 @@ const styles = {
     position: 'absolute',
     top: '8px',
     right: '8px',
-    bottom: '8px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    gap: '4px',
+  },
+  metricsRow: {
+    display: 'flex',
     gap: '4px',
   },
   metricBox: {
     backgroundColor: 'rgba(255, 255, 255, 0.92)',
     border: '1px solid #e5e7eb',
     borderRadius: '4px',
-    padding: '4px 10px',
-    minWidth: '80px',
+    padding: '4px 8px',
+    minWidth: '60px',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -314,7 +316,7 @@ const styles = {
     fontWeight: '500',
   },
   metricValue: {
-    fontSize: '13px',
+    fontSize: '12px',
     fontWeight: '600',
   },
   emptyState: {
