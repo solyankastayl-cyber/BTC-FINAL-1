@@ -281,3 +281,21 @@ function getPhaseColor(phase) {
   };
   return colors[phase] || 'bg-slate-100 text-slate-600';
 }
+
+function getPhaseTextColor(phase) {
+  const colors = {
+    MARKUP: 'text-green-600',
+    MKU: 'text-green-600',
+    MARKDOWN: 'text-red-600',
+    MAR: 'text-red-600',
+    RECOVERY: 'text-blue-600',
+    REC: 'text-blue-600',
+    DISTRIBUTION: 'text-orange-600',
+    DIS: 'text-orange-600',
+    ACCUMULATION: 'text-purple-600',
+    ACC: 'text-purple-600',
+    CAPITULATION: 'text-gray-600',
+    CAP: 'text-gray-600',
+  };
+  return colors[phase] || 'text-slate-600';
+}
