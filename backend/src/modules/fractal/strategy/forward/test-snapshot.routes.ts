@@ -140,6 +140,10 @@ export async function testSnapshotRoutes(fastify: FastifyInstance): Promise<void
           const actions: Array<'LONG' | 'SHORT' | 'HOLD'> = ['LONG', 'LONG', 'HOLD', 'SHORT'];
           const action = randomChoice(actions);
           
+          // Market phases
+          const phases = ['MARKUP', 'MARKDOWN', 'RECOVERY', 'ACCUMULATION', 'CAPITULATION', 'DISTRIBUTION'];
+          const phase = randomChoice(phases);
+          
           // Generate snapshot
           const snapshot: any = {
             symbol,
@@ -150,6 +154,7 @@ export async function testSnapshotRoutes(fastify: FastifyInstance): Promise<void
             modelType: role,
             
             action,
+            phase, // Add phase field
             dominantHorizon: randomChoice([7, 14, 30]),
             expectedReturn: randomInRange(0.05, 0.2),
             confidence: randomInRange(0.3, 0.8),
