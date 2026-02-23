@@ -144,6 +144,13 @@ const SignalSnapshotSchema = new Schema<SignalSnapshotDocument>({
     matchCount: { type: Number, default: 0 }
   },
   
+  // Market phase (for performance analysis)
+  phase: { 
+    type: String, 
+    enum: ['MARKUP', 'MARKDOWN', 'RECOVERY', 'ACCUMULATION', 'CAPITULATION', 'DISTRIBUTION', 'UNKNOWN'],
+    default: 'UNKNOWN'
+  },
+  
   // Governance
   governance: {
     guardMode: { type: String, default: 'NORMAL', enum: ['NORMAL', 'PROTECTION', 'FROZEN', 'HALT'] },
