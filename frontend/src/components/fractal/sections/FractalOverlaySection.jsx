@@ -201,7 +201,7 @@ function TopMatchesCard({ matches, selectedIndex, onSelect }) {
 
 function VolRegimeCard({ match, horizonDays }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4">
+    <div className="bg-white p-4">
       <div className="text-sm font-bold text-slate-700 mb-3">Vol Regime</div>
       
       {match ? (
