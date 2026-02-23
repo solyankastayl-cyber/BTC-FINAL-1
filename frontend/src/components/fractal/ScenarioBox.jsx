@@ -236,6 +236,8 @@ function OutcomeStats({ probUp, probDown, avgMaxDD, tailRiskP95, sampleSize, dat
 // ═══════════════════════════════════════════════════════════════
 
 export function ScenarioBox({ scenario }) {
+  const [selectedCase, setSelectedCase] = useState('Base');
+  
   if (!scenario) {
     return (
       <div className="p-6 bg-slate-50 rounded-xl" data-testid="scenario-box-empty">
@@ -264,6 +266,9 @@ export function ScenarioBox({ scenario }) {
   
   // Low sample warning
   const isLowSample = sampleSize < 10;
+  
+  // Get selected case data for RangeStrip
+  const selectedCaseData = cases?.find(c => c.label === selectedCase);
   
   return (
     <div 
