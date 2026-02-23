@@ -177,57 +177,54 @@ export function ForwardPerformanceCompact({
         <div style={styles.loading}>Loading...</div>
       )}
 
-      {/* Content - Chart full width with metrics overlay on right */}
+      {/* Content - Chart + metrics below */}
       {data && !loading && (
-        <div style={styles.contentWrapper}>
+        <>
           {data.equity && data.equity.length > 0 ? (
-            <>
+            <div style={styles.chartWrapper}>
               <canvas ref={canvasRef} style={styles.canvas} />
-              {/* Metrics overlay - 2 rows inside chart area */}
-              <div style={styles.metricsOverlay}>
-                <div style={styles.metricsRow}>
-                  <div style={styles.metricBox}>
-                    <span style={styles.metricLabel}>CAGR</span>
-                    <span style={{ ...styles.metricValue, color: metrics?.cagr > 0 ? '#22c55e' : '#ef4444' }}>
-                      {metrics?.cagrFormatted || '0.00%'}
-                    </span>
-                  </div>
-                  <div style={styles.metricBox}>
-                    <span style={styles.metricLabel}>Win Rate</span>
-                    <span style={{ ...styles.metricValue, color: metrics?.winRate >= 50 ? '#22c55e' : '#f59e0b' }}>
-                      {metrics?.winRateFormatted || '0.0%'}
-                    </span>
-                  </div>
-                </div>
-                <div style={styles.metricsRow}>
-                  <div style={styles.metricBox}>
-                    <span style={styles.metricLabel}>Max DD</span>
-                    <span style={{ ...styles.metricValue, color: '#374151' }}>
-                      {metrics?.maxDDFormatted || '0.00%'}
-                    </span>
-                  </div>
-                  <div style={styles.metricBox}>
-                    <span style={styles.metricLabel}>Sharpe</span>
-                    <span style={{ ...styles.metricValue, color: metrics?.sharpe > 1 ? '#22c55e' : '#374151' }}>
-                      {metrics?.sharpe?.toFixed(2) || '0.00'}
-                    </span>
-                  </div>
-                  <div style={styles.metricBox}>
-                    <span style={styles.metricLabel}>Trades</span>
-                    <span style={{ ...styles.metricValue, color: '#374151' }}>
-                      {metrics?.trades || 0}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </>
+            </div>
           ) : (
             <div style={styles.emptyState}>
               <Activity size={28} style={{ color: '#d1d5db', marginBottom: 6 }} />
               <span style={styles.emptyText}>No resolved trades yet for {horizon}d horizon</span>
             </div>
           )}
-        </div>
+          
+          {/* Metrics row below chart */}
+          <div style={styles.metricsRow}>
+            <div style={styles.metricBox}>
+              <span style={styles.metricLabel}>CAGR</span>
+              <span style={{ ...styles.metricValue, color: metrics?.cagr > 0 ? '#22c55e' : '#ef4444' }}>
+                {metrics?.cagrFormatted || '0.00%'}
+              </span>
+            </div>
+            <div style={styles.metricBox}>
+              <span style={styles.metricLabel}>Win Rate</span>
+              <span style={{ ...styles.metricValue, color: metrics?.winRate >= 50 ? '#22c55e' : '#f59e0b' }}>
+                {metrics?.winRateFormatted || '0.0%'}
+              </span>
+            </div>
+            <div style={styles.metricBox}>
+              <span style={styles.metricLabel}>Max DD</span>
+              <span style={{ ...styles.metricValue, color: '#374151' }}>
+                {metrics?.maxDDFormatted || '0.00%'}
+              </span>
+            </div>
+            <div style={styles.metricBox}>
+              <span style={styles.metricLabel}>Sharpe</span>
+              <span style={{ ...styles.metricValue, color: metrics?.sharpe > 1 ? '#22c55e' : '#374151' }}>
+                {metrics?.sharpe?.toFixed(2) || '0.00'}
+              </span>
+            </div>
+            <div style={styles.metricBox}>
+              <span style={styles.metricLabel}>Trades</span>
+              <span style={{ ...styles.metricValue, color: '#374151' }}>
+                {metrics?.trades || 0}
+              </span>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
