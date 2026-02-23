@@ -198,7 +198,7 @@ function OutcomeStats({ probUp, probDown, avgMaxDD, tailRiskP95, sampleSize, dat
             <TrendingDown className="w-4 h-4" />
             <span className="text-lg font-bold">{formatDD(avgMaxDD)}</span>
           </div>
-          <div className="text-xs text-slate-500">Avg Drawdown</div>
+          <div className="text-xs text-slate-500">Typical Pullback</div>
         </div>
         
         {/* Worst-case (5%) */}
