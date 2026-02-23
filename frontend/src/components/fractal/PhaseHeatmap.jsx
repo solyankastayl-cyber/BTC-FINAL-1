@@ -419,7 +419,6 @@ export function PhaseHeatmap({ tier = 'TACTICAL', onPhaseFilter }) {
             key={grade}
             style={{
               backgroundColor: colors.bg,
-              border: `1px solid ${colors.border}`,
               padding: '2px 6px',
               borderRadius: 3,
               color: colors.text,
