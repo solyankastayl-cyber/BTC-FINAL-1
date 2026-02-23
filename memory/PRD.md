@@ -108,9 +108,18 @@ Added green highlighting for the best fractal (first in list with highest simila
 - BEST badge instead of AUTO badge
 - SpxMatchReplayChipsCompact also updated
 
+### Session 6: UI Cleanup (2026-02-23) ✅
+**Removed borders:**
+- FractalAnalysisPanel.jsx — removed `border border-slate-200` from container
+
+**Renamed "Avg DD" to investor-friendly terms:**
+- FractalAnalysisPanel.jsx: "Max Pullback" (tooltip: "Average Max Drawdown — typical peak-to-trough decline")
+- ScenarioBox.jsx: "Typical Pullback"
+- RiskBox.jsx: "Typical Pullback"  
+- FractalPage.js: "Typical Pullback"
+
 ## Next Action Items
 - [ ] User testing and feedback
-- [ ] Check other admin panel tabs for remaining border/shadow issues
 
 ## Backlog (P2)
 - Performance optimization
