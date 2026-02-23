@@ -61,7 +61,7 @@ export function FractalAnalysisPanel({ forecast, overlay, matches, focus }) {
 
   return (
     <div 
-      className="bg-white rounded-lg border border-slate-200 overflow-hidden h-full"
+      className="bg-white rounded-lg overflow-hidden h-full"
       data-testid="fractal-analysis-panel"
     >
       {/* Header */}
