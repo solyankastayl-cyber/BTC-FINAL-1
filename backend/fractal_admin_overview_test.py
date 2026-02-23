@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class FractalAdminOverviewTester:
-    def __init__(self, base_url="https://forecast-weights.preview.emergentagent.com"):
+    def __init__(self, base_url="https://fractal-ui-upgrade.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0

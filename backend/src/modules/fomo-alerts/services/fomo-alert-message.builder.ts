@@ -87,7 +87,7 @@ const MESSAGE_CONFIGS: Record<FomoAlertEvent, MessageConfig> = {
       }
       
       if (p.snapshotId) {
-        text += `\n🔗 <a href="https://forecast-weights.preview.emergentagent.com/snapshot/${p.snapshotId}">View snapshot</a>`;
+        text += `\n🔗 <a href="https://fractal-ui-upgrade.preview.emergentagent.com/snapshot/${p.snapshotId}">View snapshot</a>`;
       }
       
       return text;

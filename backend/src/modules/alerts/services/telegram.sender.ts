@@ -87,7 +87,7 @@ class TelegramSender {
     msg += `*Data:* ${p.dataMode}\n`;
     
     if (p.snapshotId) {
-      msg += `\n🔗 [View snapshot](https://forecast-weights.preview.emergentagent.com/snapshot/${p.snapshotId})`;
+      msg += `\n🔗 [View snapshot](https://fractal-ui-upgrade.preview.emergentagent.com/snapshot/${p.snapshotId})`;
     }
     
     return msg;
