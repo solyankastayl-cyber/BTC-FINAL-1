@@ -186,7 +186,6 @@ export function StrategySummary({
             </span>
             <span style={{
               ...styles.edgeBadge,
-              backgroundColor: edge.hasStatisticalEdge ? '#dcfce7' : '#fee2e2',
               color: edge.hasStatisticalEdge ? '#166534' : '#991b1b',
             }}>
               {edge.hasStatisticalEdge ? 'Valid' : 'Weak'}
