@@ -64,6 +64,9 @@ Forward Performance (receives global state)
 | 2026-02-23 | ForwardPerformanceCompact | ✅ Done |
 | 2026-02-23 | FractalPage.js global state integration | ✅ Done |
 | 2026-02-23 | Backend TypeScript setup (proxy) | ✅ Done |
+| 2026-02-23 | Test Snapshot Generator API | ✅ Done |
+| 2026-02-23 | Forward Performance chart with real data | ✅ Done |
+| 2026-02-23 | Mode presets affect backend calculations | ✅ Done |
 
 ## Prioritized Backlog
 
