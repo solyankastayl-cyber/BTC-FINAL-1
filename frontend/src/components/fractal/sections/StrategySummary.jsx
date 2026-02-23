@@ -288,11 +288,7 @@ const styles = {
     color: '#111827',
   },
   modeTag: {
-    fontSize: '11px',
-    color: '#6b7280',
-    backgroundColor: '#f3f4f6',
-    padding: '3px 8px',
-    borderRadius: '4px',
+    display: 'none', // Hidden - remove badge
   },
   twoColumns: {
     display: 'grid',
