@@ -39,7 +39,7 @@ class ForwardPerformanceTester:
     def test_health_check(self):
         """Test basic API health"""
         try:
-            response = requests.get(f"{self.base_url}/api/health", timeout=10)
+            response = requests.get(f"{self.base_url}/api/system/health", timeout=10)
             passed = response.status_code == 200
             details = f"Status: {response.status_code}"
             if passed and response.text:
