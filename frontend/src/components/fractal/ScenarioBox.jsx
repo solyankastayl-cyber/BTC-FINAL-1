@@ -24,7 +24,8 @@ function ScenarioCard({
   targetPrice, 
   horizonLabel, 
   basePrice,
-  isHighlighted = false 
+  isSelected = false,
+  onSelect
 }) {
   const isPositive = returnPct >= 0;
   const isBear = label === 'Bear';
@@ -39,20 +40,24 @@ function ScenarioCard({
   let bgColor = 'bg-slate-50';
   let textColor = 'text-slate-700';
   let labelColor = 'text-slate-500';
+  let selectedRing = '';
   
   if (isBear) {
     bgColor = 'bg-red-50/50';
     textColor = 'text-red-700';
     labelColor = 'text-red-600';
+    selectedRing = isSelected ? 'ring-2 ring-red-400' : '';
   } else if (isBull) {
     bgColor = 'bg-emerald-50/50';
     textColor = 'text-emerald-700';
     labelColor = 'text-emerald-600';
+    selectedRing = isSelected ? 'ring-2 ring-emerald-400' : '';
   } else {
     // Base case
     bgColor = 'bg-blue-50/50';
     textColor = 'text-blue-700';
     labelColor = 'text-blue-600';
+    selectedRing = isSelected ? 'ring-2 ring-blue-400' : '';
   }
   
   const formatPrice = (p) => {
