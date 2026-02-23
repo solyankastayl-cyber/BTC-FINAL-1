@@ -67,31 +67,20 @@ function RiskHeader({ riskLevel, volRegime, driftStatus }) {
   const RiskIcon = riskConfig.icon;
   
   return (
-    <div className={`flex items-center justify-between p-4 rounded-lg ${riskConfig.bg}`}>
-      <div className="flex items-center gap-3">
-        <RiskIcon className={`w-8 h-8 ${riskConfig.color}`} />
+    <div className={`flex items-center justify-between p-3 rounded-lg ${riskConfig.bg}`}>
+      <div className="flex items-center gap-2">
+        <RiskIcon className={`w-6 h-6 ${riskConfig.color}`} />
         <div>
-          <div className={`text-lg font-bold ${riskConfig.color}`}>
+          <div className={`text-base font-bold ${riskConfig.color}`}>
             Risk: {riskConfig.label}
           </div>
-          <div className="text-xs text-slate-500">{riskConfig.description}</div>
+          <div className="text-[10px] text-slate-500">{riskConfig.description}</div>
         </div>
       </div>
       
-      <div className="flex items-center gap-4">
-        {/* Vol Regime */}
-        <div className="text-right">
-          <div className="text-[10px] text-slate-500 uppercase">Vol Regime</div>
-          <div className={`text-sm font-bold ${volConfig.color}`}>{volRegime || 'MEDIUM'}</div>
-        </div>
-        
-        {/* Drift Status (if present) */}
-        {driftStatus && driftStatus !== 'OK' && (
-          <div className="text-right">
-            <div className="text-[10px] text-slate-500 uppercase">Drift</div>
-            <div className="text-sm font-bold text-amber-600">{driftStatus}</div>
-          </div>
-        )}
+      <div className="text-right">
+        <div className="text-[10px] text-slate-500 uppercase">Vol Regime</div>
+        <div className={`text-sm font-bold ${volConfig.color}`}>{volRegime || 'MEDIUM'}</div>
       </div>
     </div>
   );
