@@ -103,7 +103,7 @@ export function ForwardPerformanceCompact({
     const maxVal = Math.max(...values) * 1.02;
     const range = maxVal - minVal || 1;
 
-    const padding = { top: 15, right: 130, bottom: 25, left: 50 }; // right padding for metrics overlay
+    const padding = { top: 15, right: 15, bottom: 25, left: 50 };
     const chartW = width - padding.left - padding.right;
     const chartH = height - padding.top - padding.bottom;
 
