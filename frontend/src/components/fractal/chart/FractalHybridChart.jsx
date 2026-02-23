@@ -420,30 +420,13 @@ function AgreementSection({ divergence }) {
     </div>
   );
 }
-        Analysis based on {samplePoints || '—'} data points
-      </div>
-    </div>
-  );
-}
-
-function AgreementMetric({ label, value, hint, warning }) {
-  return (
-    <div style={styles.agreementMetric}>
-      <div style={styles.metricLabel}>{label}</div>
-      <div style={{ ...styles.metricValue, color: warning ? '#f59e0b' : '#1f2937' }}>
-        {value}
-      </div>
-      <div style={styles.metricHint}>{hint}</div>
-    </div>
-  );
-}
 
 function formatWarningFlag(flag) {
   const labels = {
-    'HIGH_DIVERGENCE': 'High divergence detected',
-    'LOW_CORR': 'Low correlation warning',
-    'TERM_DRIFT': 'Terminal drift detected',
-    'DIR_MISMATCH': 'Directional disagreement',
+    'HIGH_DIVERGENCE': 'High divergence',
+    'LOW_CORR': 'Low correlation',
+    'TERM_DRIFT': 'Terminal drift',
+    'DIR_MISMATCH': 'Direction mismatch',
   };
   return labels[flag] || flag;
 }
