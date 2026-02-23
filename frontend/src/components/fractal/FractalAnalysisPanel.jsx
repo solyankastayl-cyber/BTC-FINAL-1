@@ -8,14 +8,14 @@
 
 import React, { useState } from 'react';
 
-// Phase colors matching original
+// Phase colors - text only, no background
 const PHASE_CLASSES = {
-  MARKUP: 'bg-green-100 text-green-700',
-  MARKDOWN: 'bg-red-100 text-red-700',
-  RECOVERY: 'bg-blue-100 text-blue-700',
-  DISTRIBUTION: 'bg-orange-100 text-orange-700',
-  ACCUMULATION: 'bg-emerald-100 text-emerald-700',
-  CAPITULATION: 'bg-rose-100 text-rose-700',
+  MARKUP: 'text-green-600 font-semibold',
+  MARKDOWN: 'text-red-600 font-semibold',
+  RECOVERY: 'text-blue-600 font-semibold',
+  DISTRIBUTION: 'text-orange-600 font-semibold',
+  ACCUMULATION: 'text-emerald-600 font-semibold',
+  CAPITULATION: 'text-rose-600 font-semibold',
 };
 
 // Tooltips
