@@ -151,7 +151,7 @@ export function MarketPhaseEngine({ tier = 'TACTICAL' }) {
             <div key={p.phaseId || p.phaseName} style={styles.tableRow}>
               <span style={styles.colPhase}>
                 <Tip text={PHASE_TOOLTIPS[p.phaseName]}>
-                  <span style={{ ...styles.phaseBadge, backgroundColor: phaseColor }}>
+                  <span style={{ ...styles.phaseBadge, color: phaseColor }}>
                     {p.phaseName}
                   </span>
                 </Tip>
@@ -168,7 +168,7 @@ export function MarketPhaseEngine({ tier = 'TACTICAL' }) {
               </span>
               <span style={styles.colCenter}>
                 <Tip text={RISK_TOOLTIPS[risk.label]}>
-                  <span style={{ ...styles.riskBadge, backgroundColor: risk.bg, color: risk.color }}>
+                  <span style={{ ...styles.riskBadge, color: risk.color }}>
                     {risk.label}
                   </span>
                 </Tip>
