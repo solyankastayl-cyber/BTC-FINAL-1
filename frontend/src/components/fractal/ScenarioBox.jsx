@@ -35,26 +35,22 @@ function ScenarioCard({
                  : isBull ? 'Upper bound scenario' 
                  : 'Median projection';
   
-  // Colors based on case type
+  // Colors based on case type - no borders, no shadows
   let bgColor = 'bg-slate-50';
-  let borderColor = 'border-slate-200';
   let textColor = 'text-slate-700';
   let labelColor = 'text-slate-500';
   
   if (isBear) {
-    bgColor = 'bg-red-50';
-    borderColor = 'border-red-200';
+    bgColor = 'bg-red-50/50';
     textColor = 'text-red-700';
     labelColor = 'text-red-600';
   } else if (isBull) {
-    bgColor = 'bg-emerald-50';
-    borderColor = 'border-emerald-200';
+    bgColor = 'bg-emerald-50/50';
     textColor = 'text-emerald-700';
     labelColor = 'text-emerald-600';
   } else {
-    // Base case - slightly larger
-    bgColor = 'bg-blue-50';
-    borderColor = 'border-blue-300';
+    // Base case
+    bgColor = 'bg-blue-50/50';
     textColor = 'text-blue-700';
     labelColor = 'text-blue-600';
   }
@@ -75,7 +71,7 @@ function ScenarioCard({
   
   return (
     <div 
-      className={`flex-1 min-w-[160px] p-4 rounded-xl border-2 ${bgColor} ${borderColor} transition-all hover:shadow-md ${isHighlighted ? 'ring-2 ring-blue-400' : ''}`}
+      className={`flex-1 min-w-[160px] p-4 rounded-lg ${bgColor} transition-all ${isHighlighted ? 'ring-2 ring-blue-400' : ''}`}
       data-testid={`scenario-card-${label.toLowerCase()}`}
       title={`${label}: This ${isBear ? 'reflects lower 10% historical outcomes' : isBull ? 'represents upper 10% historical outcomes' : 'is the median projection based on matched structures'}`}
     >
