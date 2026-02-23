@@ -244,14 +244,13 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '10px',
     padding: '14px 16px',
+    marginBottom: '16px', // Отступ от следующего блока
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '12px',
-    paddingBottom: '10px',
-    borderBottom: '1px solid #f3f4f6',
   },
   titleRow: {
     display: 'flex',
@@ -284,43 +283,40 @@ const styles = {
     color: '#9ca3af',
     fontSize: '13px',
   },
-  horizontalLayout: {
-    display: 'flex',
-    gap: '20px',
-    alignItems: 'stretch',
-  },
-  chartSection: {
-    flex: '1 1 auto',
-    minWidth: 0,
+  contentWrapper: {
+    position: 'relative',
   },
   canvas: {
     width: '100%',
-    maxWidth: '600px',
     border: '1px solid #f3f4f6',
     borderRadius: '6px',
   },
-  metricsColumn: {
+  metricsOverlay: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
-    minWidth: '120px',
+    gap: '6px',
   },
-  metricItem: {
-    backgroundColor: '#f9fafb',
+  metricBox: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    border: '1px solid #e5e7eb',
     borderRadius: '6px',
-    padding: '10px 14px',
+    padding: '8px 12px',
+    minWidth: '90px',
     display: 'flex',
     flexDirection: 'column',
     gap: '2px',
   },
   metricLabel: {
-    fontSize: '10px',
+    fontSize: '9px',
     color: '#9ca3af',
     textTransform: 'uppercase',
     fontWeight: '500',
   },
   metricValue: {
-    fontSize: '15px',
+    fontSize: '14px',
     fontWeight: '600',
   },
   emptyState: {
