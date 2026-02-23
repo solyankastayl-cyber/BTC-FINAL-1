@@ -250,12 +250,36 @@ const LoadingSkeleton = () => (
 // MAIN TERMINAL PAGE
 // ═══════════════════════════════════════════════════════════════
 
-const FractalTerminal = () => {
+// Asset-specific configuration
+const ASSET_CONFIG = {
+  BTC: {
+    title: 'BTC Fractal',
+    subtitle: 'Bitcoin historical fractal alignment',
+    formatPrice: (val) => `$${val?.toLocaleString('en-US', { maximumFractionDigits: 0 }) || '—'}`,
+    formatChange: (val) => `${val >= 0 ? '+' : ''}${(val * 100).toFixed(1)}%`,
+    apiPath: 'btc',
+    defaultHorizon: '30d',
+    volatilityScale: 'high', // BTC has higher volatility
+  },
+  SPX: {
+    title: 'SPX Fractal',
+    subtitle: 'S&P 500 historical pattern alignment',
+    formatPrice: (val) => `${val?.toLocaleString('en-US', { maximumFractionDigits: 1 }) || '—'} pts`,
+    formatChange: (val) => `${val >= 0 ? '+' : ''}${(val * 100).toFixed(2)}%`,
+    apiPath: 'spx',
+    defaultHorizon: '30d',
+    volatilityScale: 'moderate', // SPX is more stable
+  },
+};
+
+const FractalTerminal = ({ asset = 'BTC' }) => {
+  const config = ASSET_CONFIG[asset] || ASSET_CONFIG.BTC;
+  
   const [chartMode, setChartMode] = useState('price');
-  const [focus, setFocus] = useState('30d');
+  const [focus, setFocus] = useState(config.defaultHorizon);
   const [terminalData, setTerminalData] = useState(null);
   const [terminalLoading, setTerminalLoading] = useState(true);
-  const symbol = 'BTC';
+  const symbol = asset;
   
   // GLOBAL STRATEGY CONTROLS - Single source of truth
   const [strategyMode, setStrategyMode] = useState('balanced');
