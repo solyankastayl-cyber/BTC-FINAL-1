@@ -474,15 +474,32 @@ const FractalTerminal = () => {
           <ConsensusPanel consensus74={consensus74} horizonStack={horizonStack} />
         )}
         
-        {/* Strategy Panel */}
-        <div className="mb-6">
-          <StrategyPanel symbol={symbol} />
-        </div>
+        {/* GLOBAL STRATEGY CONTROLS — Single unified panel */}
+        <StrategyControlPanel
+          mode={strategyMode}
+          horizon={strategyHorizon}
+          execution={strategyExecution}
+          onModeChange={setStrategyMode}
+          onHorizonChange={setStrategyHorizon}
+          onExecutionChange={setStrategyExecution}
+          loading={isLoading}
+        />
         
-        {/* Forward Performance Panel */}
-        <div className="mb-6">
-          <ForwardPerformancePanel />
-        </div>
+        {/* Strategy Summary — Compact 2-column layout */}
+        <StrategySummary 
+          symbol={symbol} 
+          mode={strategyMode}
+          horizon={strategyHorizon}
+          execution={strategyExecution}
+        />
+        
+        {/* Forward Performance — Compact with global settings */}
+        <ForwardPerformanceCompact
+          symbol={symbol}
+          mode={strategyMode}
+          horizon={strategyHorizon}
+          execution={strategyExecution}
+        />
         
         {/* SYSTEM STATUS PANEL — Bottom of page */}
         <SystemStatusPanel
