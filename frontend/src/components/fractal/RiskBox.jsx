@@ -289,7 +289,7 @@ function Blockers({ blockers, constitution, driftStatus }) {
   };
   
   return (
-    <div className="mt-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl">
+    <div className="mt-4 p-4 bg-red-50 rounded-xl">
       <div className="flex items-center gap-2 mb-3">
         <Ban className="w-5 h-5 text-red-600" />
         <span className="text-sm font-bold text-red-700 uppercase">Trading Disabled</span>
@@ -340,7 +340,7 @@ export function RiskBox({
   
   return (
     <div 
-      className="bg-white rounded-xl border border-slate-200 p-5"
+      className="bg-white rounded-xl p-5"
       data-testid="risk-box"
     >
       {/* Header */}
