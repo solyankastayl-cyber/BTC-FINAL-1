@@ -111,7 +111,7 @@ function DrawdownStats({ avgMaxDD, tailRiskP95 }) {
     <div className="grid grid-cols-2 gap-4 mt-4">
       {/* Average Drawdown */}
       <div 
-        className="p-3 bg-slate-50 rounded-lg border border-slate-200"
+        className="p-3 bg-slate-50 rounded-lg"
         title="Average maximum drawdown observed within the forecast horizon across all historical matches"
       >
         <div className="flex items-center gap-2 mb-1">
@@ -126,7 +126,7 @@ function DrawdownStats({ avgMaxDD, tailRiskP95 }) {
       
       {/* Worst-case Scenario */}
       <div 
-        className="p-3 bg-slate-50 rounded-lg border border-slate-200"
+        className="p-3 bg-slate-50 rounded-lg"
         title="5th percentile of returns — the level exceeded only 5% of the time (worst outcomes)"
       >
         <div className="flex items-center gap-2 mb-1">
@@ -187,7 +187,7 @@ function PositionSizing({ sizing, showAdvanced, onToggleAdvanced }) {
   return (
     <div className="mt-4">
       {/* Main Size Display */}
-      <div className={`p-4 rounded-xl ${sizeBg} border border-slate-200`}>
+      <div className={`p-4 rounded-xl ${sizeBg}`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Scale className={`w-6 h-6 ${sizeColor}`} />
@@ -203,7 +203,7 @@ function PositionSizing({ sizing, showAdvanced, onToggleAdvanced }) {
           </div>
           
           {/* Size Badge */}
-          <div className={`px-4 py-2 rounded-lg ${sizeBg} border ${sizeColor.replace('text-', 'border-')}`}>
+          <div className={`px-4 py-2 rounded-lg ${sizeBg}`}>
             <span className={`text-lg font-mono font-bold ${sizeColor}`}>
               {finalSize.toFixed(2)}x
             </span>
