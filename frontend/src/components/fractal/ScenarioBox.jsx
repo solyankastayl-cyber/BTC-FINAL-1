@@ -107,7 +107,7 @@ function ScenarioCard({
 // RANGE STRIP
 // ═══════════════════════════════════════════════════════════════
 
-function RangeStrip({ p10, p50, p90, basePrice }) {
+function RangeStrip({ p10, p50, p90, basePrice, selectedCase, selectedTarget }) {
   const formatPrice = (p) => {
     if (!p || isNaN(p)) return '—';
     if (p >= 1000) return `$${(p / 1000).toFixed(1)}K`;
@@ -118,27 +118,31 @@ function RangeStrip({ p10, p50, p90, basePrice }) {
   const range = p90 - p10;
   const p50Position = range > 0 ? ((p50 - p10) / range) * 100 : 50;
   const basePosition = range > 0 ? ((basePrice - p10) / range) * 100 : 50;
+  const selectedPosition = selectedTarget && range > 0 
+    ? ((selectedTarget - p10) / range) * 100 
+    : p50Position;
   
-  // Determine if overall projection is bullish or bearish
-  const isBullish = p50 > basePrice;
-  const confidenceText = isBullish ? 'probability of upside' : 'probability of downside';
+  // Marker color based on selected case
+  const markerColor = selectedCase === 'Bear' ? 'bg-red-500' 
+                    : selectedCase === 'Bull' ? 'bg-emerald-500' 
+                    : 'bg-blue-500';
   
   return (
     <div className="mt-4 px-2" data-testid="range-strip">
       {/* Zone labels */}
       <div className="flex justify-between mb-1 text-[10px] text-slate-400">
         <span>Lower bound</span>
-        <span className="font-medium text-slate-500">Probability Band</span>
+        <span className="font-medium text-slate-500">{selectedCase} Target</span>
         <span>Upper bound</span>
       </div>
       
       {/* Visual bar - institutional gradient */}
       <div className="relative h-1.5 bg-gradient-to-r from-red-300/60 via-slate-200 to-emerald-300/60 rounded-full">
-        {/* P50 marker (Most likely) */}
+        {/* Selected scenario marker */}
         <div 
-          className="absolute top-0 w-2.5 h-2.5 bg-blue-500 rounded-full -translate-x-1/2 -translate-y-[2px] ring-2 ring-white shadow-sm"
-          style={{ left: `${Math.max(5, Math.min(95, p50Position))}%` }}
-          title={`Most Likely: ${formatPrice(p50)}`}
+          className={`absolute top-0 w-2.5 h-2.5 ${markerColor} rounded-full -translate-x-1/2 -translate-y-[2px] ring-2 ring-white shadow-sm transition-all duration-300`}
+          style={{ left: `${Math.max(5, Math.min(95, selectedPosition))}%` }}
+          title={`${selectedCase}: ${formatPrice(selectedTarget || p50)}`}
         />
         {/* NOW marker */}
         <div 
