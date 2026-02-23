@@ -179,7 +179,7 @@ function OutcomeStats({ probUp, probDown, avgMaxDD, tailRiskP95, sampleSize, dat
   };
   
   return (
-    <div className="mt-4 p-3 bg-slate-50 rounded-lg border border-slate-200" data-testid="outcome-stats">
+    <div className="mt-4 p-3 bg-slate-50 rounded-lg" data-testid="outcome-stats">
       <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
         Market Statistics
       </div>
@@ -249,7 +249,7 @@ function OutcomeStats({ probUp, probDown, avgMaxDD, tailRiskP95, sampleSize, dat
 export function ScenarioBox({ scenario }) {
   if (!scenario) {
     return (
-      <div className="p-6 bg-slate-50 rounded-xl border border-slate-200" data-testid="scenario-box-empty">
+      <div className="p-6 bg-slate-50 rounded-xl" data-testid="scenario-box-empty">
         <div className="text-center text-slate-400">
           <AlertTriangle className="w-8 h-8 mx-auto mb-2 opacity-50" />
           <p className="text-sm">Loading scenario data...</p>
@@ -278,7 +278,7 @@ export function ScenarioBox({ scenario }) {
   
   return (
     <div 
-      className={`bg-white rounded-xl border ${isLowSample ? 'border-amber-200' : 'border-slate-200'} p-5`}
+      className={`bg-white rounded-xl ${isLowSample ? '' : ''} p-5`}
       data-testid="scenario-box"
     >
       {/* Header */}
