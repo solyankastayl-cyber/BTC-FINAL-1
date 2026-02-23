@@ -134,6 +134,7 @@ export const SpxMatchReplayPicker = ({
             index={i}
             isSelected={i === selectedIndex}
             isPrimary={match.id === primaryMatchId}
+            isBest={i === 0}
             onClick={() => onSelectMatch(i, match)}
           />
         ))}
