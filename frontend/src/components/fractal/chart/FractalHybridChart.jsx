@@ -272,8 +272,8 @@ export function FractalHybridChart({
 }
 
 /**
- * BLOCK 73.2 — Hybrid Summary Panel - COMPACT
- * Shows: Forecast (Model), Historical Replay, Agreement metrics
+ * BLOCK 73.2 — Hybrid Summary Panel (INVESTOR-FRIENDLY)
+ * Clean, compact, human-readable
  */
 function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, divergence }) {
   if (!forecast || !currentPrice) return null;
@@ -301,53 +301,149 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
 
   const horizonDays = focus.replace('d', '');
 
+  // Get confidence level
+  const getConfidence = () => {
+    const corr = div.corr ?? 0;
+    const rmse = div.rmse ?? 100;
+    if (corr >= 0.6 && rmse <= 10) return { label: 'High', color: '#22c55e' };
+    if (corr >= 0.3 && rmse <= 25) return { label: 'Moderate', color: '#f59e0b' };
+    return { label: 'Low', color: '#ef4444' };
+  };
+  const confidence = getConfidence();
+
   return (
-    <div style={styles.container} data-testid="hybrid-summary-panel">
-      {/* Compact Header */}
-      <div style={styles.header}>
-        <div style={styles.headerLeft}>
-          <span style={styles.title}>Hybrid Projection</span>
-          <span style={styles.horizonBadge}>{horizonDays}D</span>
-        </div>
-        <div style={styles.headerRight}>
-          <span style={styles.currentPrice}>NOW: {formatPrice(currentPrice)}</span>
+    <div className="bg-white rounded-xl p-5 mt-3" data-testid="hybrid-summary-panel">
+      {/* Header - same style as Expected Outcomes */}
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+          Hybrid Projection
+        </h3>
+        <div className="flex items-center gap-3 text-xs text-slate-400">
+          <span>{horizonDays}D Horizon</span>
+          <span>·</span>
+          <span>NOW: {formatPrice(currentPrice)}</span>
           {score !== null && (
-            <span style={styles.qualityBadge} title="Match quality based on similarity, stability, volatility alignment">
+            <span 
+              className="text-blue-600 cursor-help"
+              title="Overall quality score combining pattern similarity, volatility alignment, and structural match"
+            >
               Quality: {score}/100
             </span>
           )}
         </div>
       </div>
-
-      {/* Compact 2-column Projection Grid */}
-      <div style={styles.projectionGrid}>
-        {/* Model Forecast */}
-        <div style={styles.projectionBlock} title="AI model's synthetic projection based on current market structure">
-          <div style={styles.blockHeader}>
-            <span style={{ ...styles.dot, backgroundColor: '#22c55e' }}></span>
-            <span style={styles.blockTitle}>Model</span>
-          </div>
-          <div style={{ ...styles.returnValue, color: syntheticReturn >= 0 ? '#22c55e' : '#ef4444' }}>
+      
+      {/* Compact Projections - Single Row */}
+      <div className="flex items-center gap-6 mb-4 p-3 bg-slate-50 rounded-lg">
+        {/* Model */}
+        <div 
+          className="flex items-center gap-3 cursor-help"
+          title="AI model's synthetic projection based on current market structure analysis"
+        >
+          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span className="text-xs text-slate-500">Model:</span>
+          <span className={`text-lg font-bold ${syntheticReturn >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             {syntheticReturn >= 0 ? '+' : ''}{syntheticReturn.toFixed(1)}%
-          </div>
-          <div style={styles.targetPrice}>→ {formatPrice(syntheticEndPrice)}</div>
+          </span>
+          <span className="text-sm text-slate-500">→ {formatPrice(syntheticEndPrice)}</span>
         </div>
-
-        {/* Historical Replay */}
-        <div style={styles.projectionBlock} title={`What happened ${horizonDays} days after similar historical patterns`}>
-          <div style={styles.blockHeader}>
-            <span style={{ ...styles.dot, backgroundColor: '#8b5cf6' }}></span>
-            <span style={styles.blockTitle}>Replay</span>
-          </div>
+        
+        <div className="w-px h-6 bg-slate-200"></div>
+        
+        {/* Replay */}
+        <div 
+          className="flex items-center gap-3 cursor-help"
+          title={`Historical outcome: What happened ${horizonDays} days after similar patterns in the past`}
+        >
+          <span className="w-2 h-2 rounded-full bg-violet-500"></span>
+          <span className="text-xs text-slate-500">Replay:</span>
           {replayReturn !== null ? (
             <>
-              <div style={{ ...styles.returnValue, color: replayReturn >= 0 ? '#22c55e' : '#ef4444' }}>
+              <span className={`text-lg font-bold ${replayReturn >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                 {replayReturn >= 0 ? '+' : ''}{replayReturn.toFixed(1)}%
-              </div>
-              <div style={styles.targetPrice}>→ {formatPrice(replayEndPrice)}</div>
-              <div style={styles.matchInfo}>{primaryMatch?.id} · {(primaryMatch?.similarity * 100).toFixed(0)}%</div>
+              </span>
+              <span className="text-sm text-slate-500">→ {formatPrice(replayEndPrice)}</span>
             </>
           ) : (
+            <span className="text-sm text-slate-400">No data</span>
+          )}
+        </div>
+      </div>
+      
+      {/* Pattern Diagnostics - Human-readable */}
+      {divergence && (
+        <div className="bg-slate-50 rounded-lg p-4">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Pattern Diagnostics</span>
+            <span 
+              className="text-xs font-bold cursor-help"
+              style={{ color: confidence.color }}
+              title="Overall confidence in the pattern match quality"
+            >
+              {confidence.label} Confidence
+            </span>
+          </div>
+          
+          <div className="grid grid-cols-4 gap-4">
+            {/* Similarity */}
+            <div 
+              className="text-center cursor-help"
+              title="How closely the current price structure matches the historical pattern (higher = better match)"
+            >
+              <div className="text-[10px] text-slate-400 uppercase mb-1">Similarity</div>
+              <div className={`text-base font-bold ${(div.corr || 0) >= 0.5 ? 'text-emerald-600' : 'text-slate-700'}`}>
+                {div.corr ? `${(div.corr * 100).toFixed(0)}%` : '—'}
+              </div>
+            </div>
+            
+            {/* Directional Match */}
+            <div 
+              className="text-center cursor-help"
+              title="Percentage of time when model and historical pattern agree on price direction"
+            >
+              <div className="text-[10px] text-slate-400 uppercase mb-1">Direction</div>
+              <div className="text-base font-bold text-slate-700">
+                {div.directionalMismatch != null ? `${(100 - div.directionalMismatch).toFixed(0)}%` : '—'}
+              </div>
+            </div>
+            
+            {/* Projection Gap */}
+            <div 
+              className="text-center cursor-help"
+              title="Difference between model prediction and historical outcome at the end of the period"
+            >
+              <div className="text-[10px] text-slate-400 uppercase mb-1">Gap</div>
+              <div className={`text-base font-bold ${Math.abs(div.terminalDelta || 0) > 15 ? 'text-amber-600' : 'text-slate-700'}`}>
+                {div.terminalDelta != null ? `${div.terminalDelta >= 0 ? '+' : ''}${div.terminalDelta.toFixed(0)}%` : '—'}
+              </div>
+            </div>
+            
+            {/* Path Deviation */}
+            <div 
+              className="text-center cursor-help"
+              title="How much the current path deviates from the matched historical pattern (lower = better)"
+            >
+              <div className="text-[10px] text-slate-400 uppercase mb-1">Deviation</div>
+              <div className={`text-base font-bold ${(div.rmse || 0) > 20 ? 'text-red-600' : 'text-slate-700'}`}>
+                {div.rmse ? `${div.rmse.toFixed(0)}%` : '—'}
+              </div>
+            </div>
+          </div>
+          
+          {/* Warning if late divergence */}
+          {div.flags?.includes('TERM_DRIFT') && (
+            <div className="mt-3 pt-3 border-t border-slate-200 text-[10px] text-amber-600 flex items-center gap-2">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+              </svg>
+              Late-stage divergence detected — pattern drifting from historical path
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
             <div style={styles.noData}>No data</div>
           )}
         </div>
