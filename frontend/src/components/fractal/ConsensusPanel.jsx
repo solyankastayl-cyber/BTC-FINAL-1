@@ -134,7 +134,7 @@ export function ConsensusPanel({ consensus74, horizonStack = [] }) {
         <Tip text={TOOLTIPS.conflict}>
           <div style={styles.metric}>
             <span style={styles.metricLabel}>Conflict</span>
-            <span style={{ ...styles.badge, backgroundColor: conflict.bg, color: conflict.color }}>
+            <span style={{ ...styles.badge, color: conflict.color }}>
               {conflict.label}
             </span>
           </div>
@@ -144,7 +144,7 @@ export function ConsensusPanel({ consensus74, horizonStack = [] }) {
         <Tip text={TOOLTIPS.resolved}>
           <div style={styles.metric}>
             <span style={styles.metricLabel}>Signal</span>
-            <span style={{ ...styles.actionBadge, backgroundColor: action.bg, color: action.color }}>
+            <span style={{ ...styles.actionBadge, color: action.color }}>
               {resolved?.action || 'HOLD'}
             </span>
           </div>
