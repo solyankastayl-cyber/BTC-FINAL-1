@@ -183,7 +183,7 @@ const DistributionStats = ({ overlay }) => {
 const MatchesList = ({ matches, focus }) => {
   if (!matches || matches.length === 0) {
     return (
-      <div className="bg-white rounded-lg border border-slate-200 p-4">
+      <div className="bg-white rounded-lg p-4">
         <div className="text-sm text-slate-400 text-center">No matches found</div>
       </div>
     );
