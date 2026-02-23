@@ -171,6 +171,78 @@ class FractalBackendTester:
         self.log_test("Fractal Overlay 365D Horizon", passed, details)
         return passed
 
+    def test_strategy_endpoint(self):
+        """Test strategy endpoint with different modes"""
+        modes = ['conservative', 'balanced', 'aggressive']
+        all_passed = True
+        details_list = []
+        
+        for mode in modes:
+            try:
+                url = f"{self.base_url}/api/fractal/v2.1/strategy?symbol=BTC&preset={mode}"
+                response = requests.get(url, timeout=30)
+                
+                if response.status_code != 200:
+                    all_passed = False
+                    details_list.append(f"{mode}: HTTP {response.status_code}")
+                else:
+                    data = response.json()
+                    # Check required fields
+                    required_fields = ['decision', 'edge', 'diagnostics', 'regime']
+                    missing_fields = [f for f in required_fields if f not in data]
+                    
+                    if missing_fields:
+                        all_passed = False
+                        details_list.append(f"{mode}: Missing fields {missing_fields}")
+                    else:
+                        details_list.append(f"{mode}: OK")
+                        
+            except Exception as e:
+                all_passed = False
+                details_list.append(f"{mode}: Error {str(e)}")
+        
+        details = "; ".join(details_list)
+        self.log_test("Strategy Endpoint (All Modes)", all_passed, details)
+        return all_passed
+
+    def test_forward_equity_endpoint(self):
+        """Test forward equity endpoint with different parameters"""
+        test_cases = [
+            {'preset': 'BALANCED', 'horizon': 7, 'role': 'ACTIVE'},
+            {'preset': 'CONSERVATIVE', 'horizon': 14, 'role': 'SHADOW'},
+            {'preset': 'AGGRESSIVE', 'horizon': 30, 'role': 'ACTIVE'}
+        ]
+        
+        all_passed = True
+        details_list = []
+        
+        for case in test_cases:
+            try:
+                params = f"symbol=BTC&preset={case['preset']}&horizon={case['horizon']}&role={case['role']}"
+                url = f"{self.base_url}/api/fractal/v2.1/admin/forward-equity?{params}"
+                response = requests.get(url, timeout=30)
+                
+                if response.status_code != 200:
+                    all_passed = False
+                    details_list.append(f"{case['preset']}-{case['horizon']}D: HTTP {response.status_code}")
+                else:
+                    data = response.json()
+                    if data.get('error'):
+                        all_passed = False
+                        details_list.append(f"{case['preset']}-{case['horizon']}D: API Error {data.get('error')}")
+                    else:
+                        # Check if we have equity data or empty result
+                        equity_len = len(data.get('equity', []))
+                        details_list.append(f"{case['preset']}-{case['horizon']}D: {equity_len} points")
+                        
+            except Exception as e:
+                all_passed = False
+                details_list.append(f"{case['preset']}-{case['horizon']}D: Error {str(e)}")
+        
+        details = "; ".join(details_list)
+        self.log_test("Forward Equity Endpoint (All Params)", all_passed, details)
+        return all_passed
+
     def test_admin_endpoint(self):
         """Test if admin endpoint is accessible"""
         try:
