@@ -80,7 +80,6 @@ export function HorizonSelector({ set, focus, onSetChange, onFocusChange }) {
                 padding: '8px 14px',
                 fontSize: '13px',
                 fontWeight: 600,
-                border: `2px solid ${isActive ? TIER_COLORS[tier] : '#ddd'}`,
                 borderRadius: '8px',
                 cursor: 'pointer',
                 background: isActive ? `${TIER_COLORS[tier]}15` : '#fff',
