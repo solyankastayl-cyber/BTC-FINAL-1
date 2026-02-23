@@ -97,29 +97,35 @@ function DrawdownStats({ avgMaxDD, tailRiskP95 }) {
   };
   
   return (
-    <div className="grid grid-cols-2 gap-3 mt-3">
+    <div className="grid grid-cols-2 gap-3 mt-4">
       {/* Average Drawdown */}
       <div 
-        className="p-2 bg-slate-50 rounded-lg"
+        className="p-4 bg-slate-50 rounded-lg"
         title="Average maximum drawdown observed within the forecast horizon across all historical matches"
       >
-        <div className="flex items-center gap-1.5 mb-0.5">
-          <TrendingDown className="w-3.5 h-3.5 text-amber-500" />
-          <span className="text-[10px] text-slate-500">Avg Drawdown</span>
+        <div className="flex items-center gap-2 mb-2">
+          <TrendingDown className="w-4 h-4 text-amber-500" />
+          <span className="text-xs text-slate-500">Avg Drawdown</span>
         </div>
-        <div className="text-lg font-bold text-amber-600">{formatPct(avgMaxDD)}</div>
+        <div className="text-2xl font-bold text-amber-600">{formatPct(avgMaxDD)}</div>
+        <div className="text-[10px] text-slate-400 mt-1">
+          Average worst-case within horizon
+        </div>
       </div>
       
       {/* Worst-case Scenario */}
       <div 
-        className="p-2 bg-slate-50 rounded-lg"
+        className="p-4 bg-slate-50 rounded-lg"
         title="5th percentile of returns — the level exceeded only 5% of the time (worst outcomes)"
       >
-        <div className="flex items-center gap-1.5 mb-0.5">
-          <AlertTriangle className="w-3.5 h-3.5 text-red-500" />
-          <span className="text-[10px] text-slate-500">Worst-case (5%)</span>
+        <div className="flex items-center gap-2 mb-2">
+          <AlertTriangle className="w-4 h-4 text-red-500" />
+          <span className="text-xs text-slate-500">Worst-case (5%)</span>
         </div>
-        <div className="text-lg font-bold text-red-600">{formatPct(tailRiskP95)}</div>
+        <div className="text-2xl font-bold text-red-600">{formatPct(tailRiskP95)}</div>
+        <div className="text-[10px] text-slate-400 mt-1">
+          5% worst historical outcomes
+        </div>
       </div>
     </div>
   );
