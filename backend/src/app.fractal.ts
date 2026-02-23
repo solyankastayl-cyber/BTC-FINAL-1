@@ -147,6 +147,11 @@ async function main() {
   await registerDailyRunRoutes(app);
   console.log('[Fractal] ✅ Daily Run L4.1 registered at /api/ops/daily-run/*');
   
+  // BLOCK U1: Register SPX Unified Routes (BTC-compatible contract)
+  console.log('[Fractal] Registering SPX Unified Routes (BTC-compatible)...');
+  await registerSpxUnifiedRoutes(app);
+  console.log('[Fractal] ✅ SPX Unified registered at /api/fractal/spx/*');
+  
   // NOTE: SPX Phase routes already registered via spx-core module
   
   // BLOCK C: Register Combined Terminal (Building)
