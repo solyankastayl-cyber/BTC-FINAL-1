@@ -134,7 +134,7 @@ export function FractalAnalysisPanel({ forecast, overlay, matches, focus }) {
                   <span className="text-sm font-medium text-slate-700">
                     {m.startDate?.slice(0, 10) || m.id}
                   </span>
-                  <span className={`text-xs px-1.5 py-0.5 rounded ${phaseClass}`}>
+                  <span className={`text-xs ${phaseClass}`}>
                     {m.phase}
                   </span>
                 </div>
