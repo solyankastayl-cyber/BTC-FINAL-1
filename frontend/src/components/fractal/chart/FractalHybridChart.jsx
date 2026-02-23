@@ -324,7 +324,7 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
   return (
     <div className="bg-white p-4 mt-2" data-testid="hybrid-summary-panel">
       {/* Section Title */}
-      <h2 className="text-base font-semibold text-slate-800 mb-3">
+      <h2 className="text-base font-semibold text-slate-800 mb-3 normal-case">
         <Tooltip text="Combined projection using AI model analysis and historical pattern replay">
           Hybrid Projection ({horizonDays}D)
         </Tooltip>
