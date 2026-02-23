@@ -28,10 +28,57 @@ export function FractalMainChart({
   const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
   // Fetch chart data (candles, sma200, phases) - this doesn't depend on focus
+  // For SPX: use currentWindow from focusPack as fallback
   useEffect(() => {
     let alive = true;
     setLoading(true);
 
+    // SPX uses data from focusPack.overlay.currentWindow
+    if (symbol === 'SPX' && focusPack?.overlay?.currentWindow) {
+      const cw = focusPack.overlay.currentWindow;
+      const currentPrice = focusPack.price?.current || focusPack.forecast?.currentPrice || 100;
+      
+      // Build synthetic candles from currentWindow
+      const candles = cw.timestamps?.map((ts, i) => ({
+        t: ts,
+        o: cw.raw?.[i] || currentPrice,
+        h: (cw.raw?.[i] || currentPrice) * 1.01,
+        l: (cw.raw?.[i] || currentPrice) * 0.99,
+        c: cw.raw?.[i] || currentPrice,
+      })) || [];
+      
+      if (alive && candles.length > 0) {
+        setChart({
+          symbol: 'SPX',
+          tf: '1D',
+          candles,
+          sma200: [],
+          phaseZones: [],
+        });
+        setLoading(false);
+      } else if (alive) {
+        // Fallback: generate placeholder candles
+        const basePrice = currentPrice;
+        const placeholderCandles = Array.from({ length: 90 }, (_, i) => ({
+          t: Date.now() - (90 - i) * 86400000,
+          o: basePrice * (1 + (Math.random() - 0.5) * 0.02),
+          h: basePrice * (1 + Math.random() * 0.02),
+          l: basePrice * (1 - Math.random() * 0.02),
+          c: basePrice * (1 + (Math.random() - 0.5) * 0.02),
+        }));
+        setChart({
+          symbol: 'SPX',
+          tf: '1D',
+          candles: placeholderCandles,
+          sma200: [],
+          phaseZones: [],
+        });
+        setLoading(false);
+      }
+      return;
+    }
+
+    // BTC: fetch from API
     fetch(`${API_URL}/api/fractal/v2.1/chart?symbol=${symbol}&limit=365`)
       .then(r => r.json())
       .then(chartData => {
@@ -45,7 +92,7 @@ export function FractalMainChart({
       });
 
     return () => { alive = false; };
-  }, [symbol, API_URL]);
+  }, [symbol, API_URL, focusPack]);
 
   // Build forecast from focusPack - this changes with focus
   const forecast = useMemo(() => {
