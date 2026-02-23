@@ -157,7 +157,7 @@ function MatchMetricsCard({ match, loading }) {
 function TopMatchesCard({ matches, selectedIndex, onSelect }) {
   if (!matches?.length) {
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-4">
+      <div className="bg-white p-4">
         <div className="text-sm font-bold text-slate-700 mb-3">Top Matches</div>
         <div className="text-xs text-slate-400">No matches available</div>
       </div>
@@ -165,7 +165,7 @@ function TopMatchesCard({ matches, selectedIndex, onSelect }) {
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4">
+    <div className="bg-white p-4">
       <div className="text-sm font-bold text-slate-700 mb-3">Top Matches</div>
       
       <div className="space-y-1 max-h-[200px] overflow-y-auto">
@@ -175,14 +175,14 @@ function TopMatchesCard({ matches, selectedIndex, onSelect }) {
             onClick={() => onSelect(i)}
             className={`w-full flex items-center justify-between p-2 rounded text-xs transition-colors ${
               i === selectedIndex 
-                ? 'bg-blue-50 border border-blue-200' 
+                ? 'bg-blue-50' 
                 : 'bg-slate-50 hover:bg-slate-100'
             }`}
           >
             <div className="flex items-center gap-2">
-              <span className="text-slate-400">#{i + 1}</span>
-              <span className={`px-1.5 py-0.5 rounded ${getPhaseColor(m.phase)}`}>
-                {PHASE_LABELS[m.phase]?.slice(0, 3) || m.phase?.slice(0, 3)}
+              <span className="text-slate-400">{i + 1}</span>
+              <span className={`text-xs ${getPhaseTextColor(m.phase)}`}>
+                {PHASE_LABELS[m.phase] || m.phase}
               </span>
             </div>
             <span className="font-medium">
