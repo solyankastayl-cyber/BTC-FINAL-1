@@ -244,8 +244,6 @@ const styles = {
     padding: '8px 16px',
     backgroundColor: '#ffffff',
     borderRadius: 8,
-    border: '1px solid #e2e8f0',
-    boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
     position: 'relative',
     minHeight: 48,
   },

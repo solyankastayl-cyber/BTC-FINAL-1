@@ -163,7 +163,6 @@ const styles = {
   container: {
     backgroundColor: '#ffffff',
     borderRadius: '12px',
-    border: '1px solid #e5e7eb',
     padding: '16px',
     marginTop: '16px',
   },

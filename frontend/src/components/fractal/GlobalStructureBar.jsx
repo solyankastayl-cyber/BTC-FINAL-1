@@ -39,9 +39,7 @@ export function GlobalStructureBar({ structure, resolver }) {
       gap: '12px',
       padding: '16px 20px',
       background: '#fff',
-      borderRadius: '14px',
-      border: '1px solid #e5e5e5',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+      borderRadius: '14px'
     }}>
       {/* Main Row */}
       <div style={{
