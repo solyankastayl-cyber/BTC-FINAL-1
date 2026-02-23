@@ -430,68 +430,62 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
 }
 
 /**
- * BLOCK 73.4 — Interactive Match Picker
+ * BLOCK 73.4 — Interactive Match Picker (INVESTOR-FRIENDLY)
+ * Clean list format: "2012-07-07 · 65% · Distribution"
+ * No borders, no numbering, minimal styling
  */
 
 const PHASE_MAP = {
-  ACC: { label: 'Accumulation', bgColor: '#dbeafe', textColor: '#1d4ed8' },
-  ACCUMULATION: { label: 'Accumulation', bgColor: '#dbeafe', textColor: '#1d4ed8' },
-  DIS: { label: 'Distribution', bgColor: '#fef3c7', textColor: '#b45309' },
-  DISTRIBUTION: { label: 'Distribution', bgColor: '#fef3c7', textColor: '#b45309' },
-  REC: { label: 'Recovery', bgColor: '#dcfce7', textColor: '#166534' },
-  RECOVERY: { label: 'Recovery', bgColor: '#dcfce7', textColor: '#166534' },
-  MAR: { label: 'Markdown', bgColor: '#fee2e2', textColor: '#dc2626' },
-  MARKDOWN: { label: 'Markdown', bgColor: '#fee2e2', textColor: '#dc2626' },
-  MARKUP: { label: 'Markup', bgColor: '#d1fae5', textColor: '#059669' },
+  ACC: { label: 'Accumulation' },
+  ACCUMULATION: { label: 'Accumulation' },
+  DIS: { label: 'Distribution' },
+  DISTRIBUTION: { label: 'Distribution' },
+  REC: { label: 'Recovery' },
+  RECOVERY: { label: 'Recovery' },
+  MAR: { label: 'Markdown' },
+  MARKDOWN: { label: 'Markdown' },
+  MARKUP: { label: 'Markup' },
+  CAPITULATION: { label: 'Capitulation' },
 };
 
-function getPhaseInfo(phase) {
-  return PHASE_MAP[phase] || { label: phase, bgColor: '#f4f4f5', textColor: '#52525b' };
+function getPhaseLabel(phase) {
+  return PHASE_MAP[phase]?.label || phase || 'Unknown';
 }
 
 function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
   const topMatches = matches.slice(0, 5);
   
   return (
-    <div style={matchPickerStyles.container} data-testid="match-picker">
-      {/* Header */}
-      <div style={matchPickerStyles.header}>
-        <span style={matchPickerStyles.labelText}>
-          Historical Matches {loading && <span style={matchPickerStyles.loading}>(loading...)</span>}
-        </span>
-      </div>
+    <div className="px-4 py-3 bg-white" data-testid="match-picker">
+      {/* Section Title */}
+      <h3 className="text-sm font-medium text-slate-700 mb-2">
+        <Tooltip text="Historical periods with similar market conditions. Click to see what happened after each pattern.">
+          Historical Matches
+        </Tooltip>
+        {loading && <span className="ml-2 text-xs text-violet-500 italic">(loading...)</span>}
+      </h3>
       
-      {/* Match chips - compact */}
-      <div style={matchPickerStyles.chips}>
+      {/* Match list - clean, no borders */}
+      <div className="flex flex-wrap gap-x-4 gap-y-1">
         {topMatches.map((match, idx) => {
           const isSelected = match.id === selectedId;
-          const isPrimary = match.id === primaryId;
-          const phaseInfo = getPhaseInfo(match.phase);
+          const phaseLabel = getPhaseLabel(match.phase);
+          const similarity = Math.round((match.similarity || 0) * 100);
           
           return (
             <button
               key={match.id}
               data-testid={`match-chip-${idx}`}
               onClick={() => onSelect(match.id)}
-              title={`${match.id} · ${(match.similarity * 100).toFixed(0)}% similarity · ${phaseInfo.label} phase${isPrimary ? ' · Best match' : ''}`}
-              style={{
-                ...matchPickerStyles.chip,
-                backgroundColor: isSelected ? '#1f2937' : (isPrimary ? '#f0fdf4' : '#fff'),
-                color: isSelected ? '#fff' : '#1f2937',
-                borderColor: isSelected ? '#1f2937' : (isPrimary ? '#22c55e' : '#e5e7eb'),
-              }}
+              className={`
+                text-sm py-1 px-0 bg-transparent cursor-pointer transition-colors
+                ${isSelected 
+                  ? 'text-slate-900 font-semibold' 
+                  : 'text-slate-500 hover:text-slate-700'}
+              `}
+              title={`Click to replay this historical pattern`}
             >
-              <span style={matchPickerStyles.chipRank}>#{idx + 1}</span>
-              <span style={matchPickerStyles.chipDate}>{match.id}</span>
-              <span style={{
-                ...matchPickerStyles.chipSim,
-                color: isSelected ? 'rgba(255,255,255,0.7)' : '#6b7280'
-              }}>
-                {(match.similarity * 100).toFixed(0)}%
-              </span>
-              {isPrimary && !isSelected && (
-                <span style={matchPickerStyles.primaryBadge}>Best</span>
-              )}
+              {match.id} · {similarity}% · {phaseLabel}
             </button>
           );
         })}
@@ -499,68 +493,6 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
     </div>
   );
 }
-
-const matchPickerStyles = {
-  container: {
-    padding: '10px 14px',
-    borderTop: '1px solid #e5e7eb',
-    backgroundColor: '#fafafa',
-  },
-  header: {
-    marginBottom: 8,
-  },
-  labelText: {
-    fontSize: 11,
-    fontWeight: 600,
-    color: '#374151',
-  },
-  loading: {
-    fontSize: 10,
-    color: '#8b5cf6',
-    fontStyle: 'italic',
-    marginLeft: 6,
-  },
-  chips: {
-    display: 'flex',
-    gap: 6,
-    flexWrap: 'wrap',
-  },
-  chip: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 6,
-    padding: '5px 10px',
-    border: '1px solid',
-    borderRadius: 6,
-    cursor: 'pointer',
-    fontSize: 11,
-    transition: 'all 0.15s ease',
-    position: 'relative',
-  },
-  chipRank: {
-    fontWeight: 700,
-    fontSize: 10,
-    color: '#6b7280',
-  },
-  chipDate: {
-    fontSize: 10,
-    fontWeight: 500,
-  },
-  chipSim: {
-    fontSize: 10,
-  },
-  primaryBadge: {
-    position: 'absolute',
-    top: -6,
-    right: -4,
-    fontSize: 7,
-    padding: '1px 4px',
-    backgroundColor: '#22c55e',
-    color: '#fff',
-    borderRadius: 3,
-    fontWeight: 600,
-  },
-};
 
 /**
  * BLOCK 73.5.2 — Phase Filter Bar
