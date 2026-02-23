@@ -154,7 +154,7 @@ const DistributionStats = ({ overlay }) => {
           </div>
         </div>
         <div>
-          <div className="text-xs text-slate-400">Avg Drawdown</div>
+          <div className="text-xs text-slate-400">Typical Pullback</div>
           <div className="text-lg font-bold text-red-600">
             -{(stats.avgMaxDD * 100).toFixed(1)}%
           </div>
