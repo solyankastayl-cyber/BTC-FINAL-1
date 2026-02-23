@@ -77,7 +77,7 @@ export function ForwardPerformanceCompact({
     };
   }, [symbol, mode, horizon, execution]);
 
-  // Draw equity chart
+  // Draw equity chart - full width
   useEffect(() => {
     if (!canvasRef.current || !data?.equity?.length) return;
     
@@ -86,12 +86,12 @@ export function ForwardPerformanceCompact({
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
-    const width = 700;
-    const height = 180;
+    const width = canvas.parentElement?.clientWidth || 900;
+    const height = 200;
     
     canvas.width = width * dpr;
     canvas.height = height * dpr;
-    canvas.style.width = `${width}px`;
+    canvas.style.width = `100%`;
     canvas.style.height = `${height}px`;
     ctx.scale(dpr, dpr);
 
@@ -103,7 +103,7 @@ export function ForwardPerformanceCompact({
     const maxVal = Math.max(...values) * 1.02;
     const range = maxVal - minVal || 1;
 
-    const padding = { top: 15, right: 15, bottom: 25, left: 50 };
+    const padding = { top: 15, right: 130, bottom: 25, left: 50 }; // right padding for metrics overlay
     const chartW = width - padding.left - padding.right;
     const chartH = height - padding.top - padding.bottom;
 
