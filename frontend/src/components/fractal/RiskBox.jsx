@@ -204,44 +204,45 @@ function CombinedRiskPosition({ riskLevel, volRegime, sizing, constitution, drif
   
   return (
     <div 
-      className={`p-3 rounded-lg ${riskConfig.bg} relative`}
+      className={`p-4 rounded-lg ${riskConfig.bg} relative`}
       onMouseEnter={() => hasBlockers && setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
       {/* Top Row: Risk + Position */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-3">
         {/* Left: Risk Level */}
-        <div className="flex items-center gap-2">
-          <RiskIcon className={`w-5 h-5 ${riskConfig.color}`} />
+        <div className="flex items-center gap-3">
+          <RiskIcon className={`w-7 h-7 ${riskConfig.color}`} />
           <div>
-            <div className={`text-sm font-bold ${riskConfig.color}`}>
+            <div className={`text-base font-bold ${riskConfig.color}`}>
               Risk: {riskConfig.label}
             </div>
-            <div className="text-[10px] text-slate-500">{riskConfig.description}</div>
+            <div className="text-xs text-slate-500">{riskConfig.description}</div>
           </div>
         </div>
         
         {/* Right: Position Size */}
         <div className="text-right cursor-help">
           <div className="text-[10px] text-slate-500 uppercase">Position</div>
-          <div className={`text-lg font-bold ${sizeColor}`}>
+          <div className={`text-xl font-bold ${sizeColor}`}>
             {finalSize > 0 ? `${(finalSize * 100).toFixed(0)}%` : 'NO TRADE'}
-            <span className="text-xs font-normal text-slate-400 ml-1">
+            <span className="text-sm font-normal text-slate-400 ml-1">
               {finalSize.toFixed(2)}x
             </span>
           </div>
         </div>
       </div>
       
-      {/* Reasons (compact) */}
+      {/* Reasons */}
       {displayReasons.length > 0 && (
-        <div className="mt-2 pt-2 border-t border-slate-200/50">
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
+        <div className="pt-3 border-t border-slate-200/50">
+          <div className="text-[10px] text-slate-500 uppercase mb-2">Reasons:</div>
+          <div className="space-y-1">
             {displayReasons.map((reason, i) => (
-              <span key={i} className="text-[10px] text-slate-500 flex items-center gap-1">
-                <span className="w-1 h-1 rounded-full bg-slate-400"></span>
+              <div key={i} className="text-xs text-slate-600 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                 {reason}
-              </span>
+              </div>
             ))}
           </div>
         </div>
