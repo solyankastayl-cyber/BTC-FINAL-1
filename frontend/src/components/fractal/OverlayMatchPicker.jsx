@@ -30,7 +30,6 @@ export function OverlayMatchPicker({ matches, value, onChange }) {
             data-testid={`match-picker-${i}`}
             style={{
               padding: "6px 10px",
-              border: active ? "2px solid #000" : "1px solid #e6e6e6",
               background: active ? "#000" : "#fff",
               color: active ? "#fff" : "#000",
               borderRadius: 8,
