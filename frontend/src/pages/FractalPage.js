@@ -141,7 +141,7 @@ const DistributionStats = ({ overlay }) => {
   const { stats } = overlay;
   
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-4" data-testid="distribution-stats">
+    <div className="bg-white rounded-lg p-4" data-testid="distribution-stats">
       <div className="text-xs font-semibold text-slate-500 uppercase mb-3">
         Distribution Stats
       </div>
