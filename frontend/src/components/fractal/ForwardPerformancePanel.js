@@ -443,8 +443,7 @@ const styles = {
     marginTop: 40,
     padding: 24,
     backgroundColor: '#fff',
-    borderRadius: 12,
-    border: '1px solid #e5e7eb'
+    borderRadius: 12
   },
   header: {
     marginBottom: 20

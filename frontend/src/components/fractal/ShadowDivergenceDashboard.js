@@ -678,9 +678,7 @@ const styles = {
     marginBottom: 32,
     padding: 24,
     backgroundColor: '#fff',
-    borderRadius: 16,
-    border: '1px solid #e2e8f0',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+    borderRadius: 16
   },
   headerTitle: {
     marginBottom: 16
@@ -749,8 +747,7 @@ const styles = {
     marginBottom: 32,
     padding: 20,
     backgroundColor: '#fff',
-    borderRadius: 12,
-    border: '1px solid #e5e7eb'
+    borderRadius: 12
   },
   sectionHeader: {
     display: 'flex',
