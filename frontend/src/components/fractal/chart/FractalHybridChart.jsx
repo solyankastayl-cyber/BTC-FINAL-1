@@ -736,18 +736,14 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
   
   return (
     <div style={matchPickerStyles.container} data-testid="match-picker">
-      {/* Header with explanation */}
+      {/* Header */}
       <div style={matchPickerStyles.header}>
-        <div style={matchPickerStyles.label}>
-          <span style={matchPickerStyles.labelText}>Select Historical Match</span>
-          {loading && <span style={matchPickerStyles.loading}>Loading...</span>}
-        </div>
-        <div style={matchPickerStyles.hint}>
-          Historical periods that match current market structure
-        </div>
+        <span style={matchPickerStyles.labelText}>
+          Historical Matches {loading && <span style={matchPickerStyles.loading}>(loading...)</span>}
+        </span>
       </div>
       
-      {/* Match chips */}
+      {/* Match chips - compact */}
       <div style={matchPickerStyles.chips}>
         {topMatches.map((match, idx) => {
           const isSelected = match.id === selectedId;
@@ -759,6 +755,7 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
               key={match.id}
               data-testid={`match-chip-${idx}`}
               onClick={() => onSelect(match.id)}
+              title={`${match.id} · ${(match.similarity * 100).toFixed(0)}% similarity · ${phaseInfo.label} phase${isPrimary ? ' · Best match' : ''}`}
               style={{
                 ...matchPickerStyles.chip,
                 backgroundColor: isSelected ? '#1f2937' : (isPrimary ? '#f0fdf4' : '#fff'),
@@ -774,16 +771,8 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
               }}>
                 {(match.similarity * 100).toFixed(0)}%
               </span>
-              {/* Full phase name instead of abbreviation */}
-              <span style={{
-                ...matchPickerStyles.chipPhase,
-                backgroundColor: isSelected ? 'rgba(255,255,255,0.15)' : phaseInfo.bgColor,
-                color: isSelected ? '#fff' : phaseInfo.textColor,
-              }}>
-                {phaseInfo.label}
-              </span>
               {isPrimary && !isSelected && (
-                <span style={matchPickerStyles.primaryBadge}>Best Match</span>
+                <span style={matchPickerStyles.primaryBadge}>Best</span>
               )}
             </button>
           );
@@ -795,80 +784,63 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
 
 const matchPickerStyles = {
   container: {
-    padding: '14px 18px',
+    padding: '10px 14px',
     borderTop: '1px solid #e5e7eb',
     backgroundColor: '#fafafa',
   },
   header: {
-    marginBottom: 12,
-  },
-  label: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 10,
-    marginBottom: 4,
+    marginBottom: 8,
   },
   labelText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: 600,
     color: '#374151',
   },
-  hint: {
-    fontSize: 11,
-    color: '#9ca3af',
-  },
   loading: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#8b5cf6',
     fontStyle: 'italic',
+    marginLeft: 6,
   },
   chips: {
     display: 'flex',
-    gap: 10,
+    gap: 6,
     flexWrap: 'wrap',
   },
   chip: {
     display: 'flex',
     alignItems: 'center',
-    gap: 8,
-    padding: '8px 12px',
+    gap: 6,
+    padding: '5px 10px',
     border: '1px solid',
-    borderRadius: 10,
+    borderRadius: 6,
     cursor: 'pointer',
-    fontSize: 12,
+    fontSize: 11,
     transition: 'all 0.15s ease',
     position: 'relative',
   },
   chipRank: {
     fontWeight: 700,
-    fontSize: 11,
+    fontSize: 10,
     color: '#6b7280',
   },
   chipDate: {
-    fontFamily: 'monospace',
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 500,
   },
   chipSim: {
-    fontSize: 11,
-  },
-  chipPhase: {
     fontSize: 10,
-    padding: '3px 8px',
-    borderRadius: 5,
-    fontWeight: 500,
   },
   primaryBadge: {
     position: 'absolute',
-    top: -8,
+    top: -6,
     right: -4,
-    fontSize: 8,
-    padding: '2px 6px',
+    fontSize: 7,
+    padding: '1px 4px',
     backgroundColor: '#22c55e',
     color: '#fff',
-    borderRadius: 4,
+    borderRadius: 3,
     fontWeight: 600,
-    whiteSpace: 'nowrap',
   },
 };
 
