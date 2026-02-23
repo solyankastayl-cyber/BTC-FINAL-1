@@ -55,6 +55,30 @@ Complete redesign of `FractalHybridChart.jsx` components:
 - Simplified, clean indicator
 - Removed colored badges
 
+### Session 4: Cosmetic Cleanup (2026-02-23) ✅
+
+**Chart Labels:**
+- Removed "Conf: 100.0%" from forecast labels
+- Only showing "Forecast: +X.X%" now
+
+**Replay Tab - OverlayMatchPicker:**
+- Removed hash signs (#), now just numbers: `1 · Accumulation · 85%`
+- Full phase names instead of abbreviations (Accumulation, not Acc)
+- Removed button backgrounds and borders - clean text style
+
+**Replay Tab - Top Matches Card:**
+- Removed hash signs (#): `1 Accumulation 85%`
+- Full phase names displayed
+- Removed colored badges with backgrounds
+- Phase shown as colored text only
+
+**Replay Tab - Match Metrics Card:**
+- Removed border around card container
+- Phase displayed as plain colored text (no badge background)
+
+**Replay Tab - Vol Regime Card:**
+- Removed border around card container
+
 ### Fixed: HTTP 520 Error
 - Installed npm dependencies in `/app/backend`
 - TypeScript Fractal backend now starts properly
