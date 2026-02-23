@@ -239,10 +239,11 @@ const styles = {
   phaseBadge: {
     color: '#fff',
     padding: '4px 10px',
-    borderRadius: '5px',
+    borderRadius: '0',
     fontSize: '11px',
     fontWeight: '600',
     textTransform: 'uppercase',
+    backgroundColor: 'transparent !important',
   },
   statValue: {
     fontSize: '13px',
@@ -250,9 +251,11 @@ const styles = {
   },
   riskBadge: {
     padding: '3px 10px',
-    borderRadius: '5px',
+    borderRadius: '0',
     fontSize: '11px',
     fontWeight: '600',
+    backgroundColor: 'transparent',
+    border: 'none',
   },
   loading: { fontSize: '13px', color: '#9ca3af', padding: '20px' },
   error: { fontSize: '13px', color: '#dc2626', padding: '20px' },
