@@ -10,7 +10,7 @@
  * Single source of truth from backend scenario pack
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { TrendingUp, TrendingDown, Target, AlertTriangle, CheckCircle, Info } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════════
