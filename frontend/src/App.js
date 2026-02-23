@@ -617,9 +617,12 @@ function App() {
                   Main tab in sidebar with own sub-routes
                   ═══════════════════════════════════════════════════════════ */}
               <Route path="/fractal" element={<FractalPage />} />
+              <Route path="/fractal/btc" element={<FractalPage />} />
               <Route path="/fractal/signal" element={<FractalPage />} />
               <Route path="/fractal/matches" element={<FractalPage />} />
               <Route path="/fractal/backtest" element={<FractalPage />} />
+              {/* SPX Fractal — Uses unified FractalPage with asset="SPX" */}
+              <Route path="/fractal/spx" element={<FractalPage asset="SPX" />} />
               
               {/* SPX Terminal - BLOCK B5.3 (Multi-Horizon SPX Engine) */}
               <Route path="/spx" element={<SpxTerminalPage />} />
