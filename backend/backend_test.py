@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 class FractalBackendTester:
-    def __init__(self, base_url="http://127.0.0.1:8002"):
+    def __init__(self, base_url="https://fractal-logic-update-3.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
