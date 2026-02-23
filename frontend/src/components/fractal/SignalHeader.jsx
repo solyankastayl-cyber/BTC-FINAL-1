@@ -360,7 +360,7 @@ export function SignalHeader({
       
       {/* Advanced Section */}
       {showAdvanced && (
-        <div className="mt-3 p-4 bg-slate-50 rounded-lg border border-slate-200" data-testid="advanced-metrics">
+        <div className="mt-3 p-4 bg-slate-50 rounded-lg" data-testid="advanced-metrics">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
             <AdvancedMetric 
               label="Consensus Score" 
