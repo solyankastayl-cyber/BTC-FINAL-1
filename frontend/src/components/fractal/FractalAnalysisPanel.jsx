@@ -24,7 +24,7 @@ const TIPS = {
   base: 'Base Case — median expected outcome',
   bull: 'Bull Case — best-case (90th percentile)',
   upside: 'Upside Probability — % of positive outcomes',
-  dd: 'Average max drawdown during period',
+  dd: 'Average Max Drawdown — typical peak-to-trough decline during the period',
 };
 
 function Tip({ text, children }) {
