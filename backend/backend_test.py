@@ -332,7 +332,7 @@ def main():
     print(f"\n📄 Detailed results saved to: /app/backend/backend_test_results.json")
     
     # Return exit code based on success
-    critical_tests = ['Fractal Overlay 365D Horizon', 'Fractal Overlay Basic']
+    critical_tests = ['Strategy Endpoint (All Modes)', 'Forward Equity Endpoint (All Params)', 'Fractal Overlay Basic']
     critical_failures = [r for r in results if r['test_name'] in critical_tests and not r['passed']]
     
     if critical_failures:
