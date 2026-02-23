@@ -414,8 +414,8 @@ const FractalTerminal = () => {
                 {chartMode === 'hybrid' && (
                   <FractalHybridChart
                     symbol={symbol}
-                    width={1100}
-                    height={420}
+                    width={1200}
+                    height={460}
                     focus={focus}
                     focusPack={focusData}
                     onPhaseFilter={setPhaseId}
