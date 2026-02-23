@@ -16,5 +16,6 @@ export {
 } from './forward.equity.service.js';
 
 export { forwardEquityRoutes } from './forward.routes.js';
+export { testSnapshotRoutes } from './test-snapshot.routes.js';
 
 export * from './forward.metrics.js';
