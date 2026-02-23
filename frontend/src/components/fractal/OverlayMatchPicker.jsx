@@ -22,16 +22,27 @@ export function OverlayMatchPicker({ matches, value, onChange }) {
     <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
       {top.map((m, i) => {
         const active = i === value;
+        const isBest = i === 0; // First match is best (highest similarity)
         const phaseLabel = PHASE_LABELS[m.phase] || m.phase;
+        
+        // Color logic: Best match = green, Active = dark, Rest = gray
+        let textColor = "#6b7280"; // default gray
+        if (isBest) {
+          textColor = "#059669"; // emerald-600 (green) for best match
+        } else if (active) {
+          textColor = "#1f2937"; // dark for active non-best
+        }
+        
         return (
           <button
             key={m.id}
             onClick={() => onChange(i)}
             data-testid={`match-picker-${i}`}
+            title={isBest ? "Best match (highest similarity)" : "Click to replay this historical pattern"}
             style={{
               padding: "4px 0",
               background: "transparent",
-              color: active ? "#1f2937" : "#6b7280",
+              color: textColor,
               border: "none",
               cursor: "pointer",
               fontSize: 13,
