@@ -48,10 +48,10 @@ function transformSpxToFocusPack(spxData, focus) {
         matchCount: spxData.explain?.topMatches?.length || 0,
         avgSimilarity: spxData.diagnostics?.similarity / 100 || 0,
         medianReturn: spxData.horizons?.find(h => h.dominant)?.expectedReturn || 0,
-        avgMaxDD: spxData.risk?.maxDD_WF || 0,
+        avgMaxDD: (spxData.risk?.maxDD_WF || 0) / 100, // Normalize to 0-1 (3.9% -> 0.039)
         hitRate: spxData.decision?.confidence || 0,
-        p10Return: spxData.risk?.mcP95_DD || 0,
-        p90Return: spxData.horizons?.find(h => h.dominant)?.expectedReturn * 1.5 || 0,
+        p10Return: (spxData.risk?.mcP95_DD || 0) / 100, // Normalize
+        p90Return: (spxData.horizons?.find(h => h.dominant)?.expectedReturn || 0) * 1.5,
         entropy: spxData.diagnostics?.entropy || 0,
       },
       distributionSeries: spxData.chartData?.bands || {
