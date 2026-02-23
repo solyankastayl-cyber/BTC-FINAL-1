@@ -272,8 +272,22 @@ export function FractalHybridChart({
 }
 
 /**
+ * Tooltip Component - Simple hover tooltip
+ */
+function Tooltip({ children, text }) {
+  return (
+    <span 
+      className="cursor-help relative group"
+      title={text}
+    >
+      {children}
+    </span>
+  );
+}
+
+/**
  * BLOCK 73.2 — Hybrid Summary Panel (INVESTOR-FRIENDLY)
- * Clean, compact, human-readable
+ * Clean, compact, human-readable - NO borders, NO dev-style elements
  */
 function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, divergence }) {
   if (!forecast || !currentPrice) return null;
@@ -301,65 +315,49 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
 
   const horizonDays = focus.replace('d', '');
 
-  // Get confidence level
-  const getConfidence = () => {
-    const corr = div.corr ?? 0;
-    const rmse = div.rmse ?? 100;
-    if (corr >= 0.6 && rmse <= 10) return { label: 'High', color: '#22c55e' };
-    if (corr >= 0.3 && rmse <= 25) return { label: 'Moderate', color: '#f59e0b' };
-    return { label: 'Low', color: '#ef4444' };
-  };
-  const confidence = getConfidence();
+  // Calculate human-readable metrics
+  const patternSimilarity = div.corr ? Math.round(div.corr * 100) : null;
+  const directionalAlignment = div.directionalMismatch != null ? Math.round(100 - div.directionalMismatch) : null;
+  const projectionGap = div.terminalDelta != null ? Math.round(div.terminalDelta) : null;
+  const hasTerminalDrift = div.flags?.includes('TERM_DRIFT');
 
   return (
-    <div className="bg-white rounded-xl p-5 mt-3" data-testid="hybrid-summary-panel">
-      {/* Header - same style as Expected Outcomes */}
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider">
-          Hybrid Projection
-        </h3>
-        <div className="flex items-center gap-3 text-xs text-slate-400">
-          <span>{horizonDays}D Horizon</span>
-          <span>·</span>
-          <span>NOW: {formatPrice(currentPrice)}</span>
-          {score !== null && (
-            <span 
-              className="text-blue-600 cursor-help"
-              title="Overall quality score combining pattern similarity, volatility alignment, and structural match"
-            >
-              Quality: {score}/100
-            </span>
-          )}
-        </div>
-      </div>
+    <div className="bg-white p-4 mt-2" data-testid="hybrid-summary-panel">
+      {/* Section Title */}
+      <h2 className="text-base font-semibold text-slate-800 mb-3">
+        <Tooltip text="Combined projection using AI model analysis and historical pattern replay">
+          Hybrid Projection ({horizonDays}D)
+        </Tooltip>
+        {score !== null && (
+          <span className="ml-3 text-sm font-normal text-slate-500">
+            <Tooltip text="Overall quality score (0-100) combining pattern similarity, volatility alignment, and structural match. Higher is better.">
+              Quality: {score} / 100
+            </Tooltip>
+          </span>
+        )}
+      </h2>
       
-      {/* Compact Projections - Single Row */}
-      <div className="flex items-center gap-6 mb-4 p-3 bg-slate-50 rounded-lg">
-        {/* Model */}
-        <div 
-          className="flex items-center gap-3 cursor-help"
-          title="AI model's synthetic projection based on current market structure analysis"
-        >
-          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span className="text-xs text-slate-500">Model:</span>
-          <span className={`text-lg font-bold ${syntheticReturn >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+      {/* Compact Projections - List format */}
+      <div className="space-y-1 mb-4">
+        {/* Model Projection */}
+        <div className="flex items-center gap-2">
+          <Tooltip text="AI model's synthetic projection based on current market structure, momentum, and volatility patterns">
+            <span className="text-sm text-slate-600 w-14">Model:</span>
+          </Tooltip>
+          <span className={`text-sm font-semibold ${syntheticReturn >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             {syntheticReturn >= 0 ? '+' : ''}{syntheticReturn.toFixed(1)}%
           </span>
           <span className="text-sm text-slate-500">→ {formatPrice(syntheticEndPrice)}</span>
         </div>
         
-        <div className="w-px h-6 bg-slate-200"></div>
-        
-        {/* Replay */}
-        <div 
-          className="flex items-center gap-3 cursor-help"
-          title={`Historical outcome: What happened ${horizonDays} days after similar patterns in the past`}
-        >
-          <span className="w-2 h-2 rounded-full bg-violet-500"></span>
-          <span className="text-xs text-slate-500">Replay:</span>
+        {/* Replay Projection */}
+        <div className="flex items-center gap-2">
+          <Tooltip text={`Historical outcome: What actually happened ${horizonDays} days after similar market conditions in the past`}>
+            <span className="text-sm text-slate-600 w-14">Replay:</span>
+          </Tooltip>
           {replayReturn !== null ? (
             <>
-              <span className={`text-lg font-bold ${replayReturn >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+              <span className={`text-sm font-semibold ${replayReturn >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                 {replayReturn >= 0 ? '+' : ''}{replayReturn.toFixed(1)}%
               </span>
               <span className="text-sm text-slate-500">→ {formatPrice(replayEndPrice)}</span>
@@ -370,262 +368,66 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
         </div>
       </div>
       
-      {/* Pattern Diagnostics - Human-readable */}
+      {/* Model vs History - Human-readable metrics */}
       {divergence && (
-        <div className="bg-slate-50 rounded-lg p-4">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Pattern Diagnostics</span>
-            <span 
-              className="text-xs font-bold cursor-help"
-              style={{ color: confidence.color }}
-              title="Overall confidence in the pattern match quality"
-            >
-              {confidence.label} Confidence
-            </span>
-          </div>
+        <div className="pt-3 border-t border-slate-100">
+          <h3 className="text-sm font-medium text-slate-700 mb-2">
+            <Tooltip text="How well the AI model agrees with historical pattern behavior">
+              Model vs History
+            </Tooltip>
+          </h3>
           
-          <div className="grid grid-cols-4 gap-4">
-            {/* Similarity */}
-            <div 
-              className="text-center cursor-help"
-              title="How closely the current price structure matches the historical pattern (higher = better match)"
-            >
-              <div className="text-[10px] text-slate-400 uppercase mb-1">Similarity</div>
-              <div className={`text-base font-bold ${(div.corr || 0) >= 0.5 ? 'text-emerald-600' : 'text-slate-700'}`}>
-                {div.corr ? `${(div.corr * 100).toFixed(0)}%` : '—'}
+          <div className="space-y-1 text-sm">
+            {/* Pattern Similarity */}
+            {patternSimilarity !== null && (
+              <div className="flex items-center gap-2">
+                <Tooltip text="How closely the current price structure matches the historical pattern. Higher percentage means stronger resemblance.">
+                  <span className="text-slate-600">Pattern Similarity:</span>
+                </Tooltip>
+                <span className={`font-medium ${patternSimilarity >= 50 ? 'text-emerald-600' : 'text-slate-700'}`}>
+                  {patternSimilarity}%
+                </span>
               </div>
-            </div>
+            )}
             
-            {/* Directional Match */}
-            <div 
-              className="text-center cursor-help"
-              title="Percentage of time when model and historical pattern agree on price direction"
-            >
-              <div className="text-[10px] text-slate-400 uppercase mb-1">Direction</div>
-              <div className="text-base font-bold text-slate-700">
-                {div.directionalMismatch != null ? `${(100 - div.directionalMismatch).toFixed(0)}%` : '—'}
+            {/* Directional Alignment */}
+            {directionalAlignment !== null && (
+              <div className="flex items-center gap-2">
+                <Tooltip text="Percentage of time when both model and history agree on price direction (up vs down). Higher is better.">
+                  <span className="text-slate-600">Directional Alignment:</span>
+                </Tooltip>
+                <span className={`font-medium ${directionalAlignment >= 60 ? 'text-emerald-600' : 'text-slate-700'}`}>
+                  {directionalAlignment}%
+                </span>
               </div>
-            </div>
+            )}
             
             {/* Projection Gap */}
-            <div 
-              className="text-center cursor-help"
-              title="Difference between model prediction and historical outcome at the end of the period"
-            >
-              <div className="text-[10px] text-slate-400 uppercase mb-1">Gap</div>
-              <div className={`text-base font-bold ${Math.abs(div.terminalDelta || 0) > 15 ? 'text-amber-600' : 'text-slate-700'}`}>
-                {div.terminalDelta != null ? `${div.terminalDelta >= 0 ? '+' : ''}${div.terminalDelta.toFixed(0)}%` : '—'}
+            {projectionGap !== null && (
+              <div className="flex items-center gap-2">
+                <Tooltip text="Difference between where the model predicts price will be and where history suggests it will be. Closer to 0% means better agreement.">
+                  <span className="text-slate-600">Projection Gap:</span>
+                </Tooltip>
+                <span className={`font-medium ${Math.abs(projectionGap) > 15 ? 'text-amber-600' : 'text-slate-700'}`}>
+                  {projectionGap >= 0 ? '+' : ''}{projectionGap}%
+                </span>
               </div>
-            </div>
+            )}
             
-            {/* Path Deviation */}
-            <div 
-              className="text-center cursor-help"
-              title="How much the current path deviates from the matched historical pattern (lower = better)"
-            >
-              <div className="text-[10px] text-slate-400 uppercase mb-1">Deviation</div>
-              <div className={`text-base font-bold ${(div.rmse || 0) > 20 ? 'text-red-600' : 'text-slate-700'}`}>
-                {div.rmse ? `${div.rmse.toFixed(0)}%` : '—'}
+            {/* Terminal Drift Warning */}
+            {hasTerminalDrift && (
+              <div className="flex items-center gap-2 mt-2 text-amber-600">
+                <Tooltip text="The model and historical pattern started similar but are now diverging significantly. Late-stage predictions may be less reliable.">
+                  <span className="text-xs italic">Late-stage divergence detected</span>
+                </Tooltip>
               </div>
-            </div>
+            )}
           </div>
-          
-          {/* Warning if late divergence */}
-          {div.flags?.includes('TERM_DRIFT') && (
-            <div className="mt-3 pt-3 border-t border-slate-200 text-[10px] text-amber-600 flex items-center gap-2">
-              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
-              </svg>
-              Late-stage divergence detected — pattern drifting from historical path
-            </div>
-          )}
         </div>
       )}
     </div>
   );
 }
-
-/**
-          ))}
-        </div>
-      )}
-      
-      <div style={styles.sampleInfo}>Based on {samplePoints || 30} data points</div>
-    </div>
-  );
-}
-
-function formatWarningFlag(flag) {
-  const labels = {
-    'HIGH_DIVERGENCE': 'High divergence',
-    'LOW_CORR': 'Low correlation',
-    'TERM_DRIFT': 'Terminal drift',
-    'DIR_MISMATCH': 'Direction mismatch',
-  };
-  return labels[flag] || flag;
-}
-
-// Old DivergenceDetails removed - now using AgreementSection above
-
-const styles = {
-  // Main container - very compact
-  container: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: '10px 12px',
-    marginTop: 6,
-  },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  headerLeft: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 6,
-  },
-  headerRight: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 10,
-  },
-  title: {
-    fontSize: 12,
-    fontWeight: 600,
-    color: '#374151',
-  },
-  horizonBadge: {
-    fontSize: 9,
-    fontWeight: 500,
-    color: '#6b7280',
-    backgroundColor: '#f3f4f6',
-    padding: '2px 6px',
-    borderRadius: 3,
-  },
-  currentPrice: {
-    fontSize: 10,
-    color: '#6b7280',
-  },
-  qualityBadge: {
-    fontSize: 10,
-    fontWeight: 600,
-    color: '#0284c7',
-    backgroundColor: '#f0f9ff',
-    padding: '3px 8px',
-    borderRadius: 4,
-  },
-  // Projection grid - inline
-  projectionGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: 8,
-    marginBottom: 8,
-  },
-  projectionBlock: {
-    backgroundColor: '#fafafa',
-    borderRadius: 6,
-    padding: '8px 10px',
-    cursor: 'help',
-  },
-  blockHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 5,
-    marginBottom: 4,
-  },
-  blockTitle: {
-    fontSize: 10,
-    fontWeight: 600,
-    color: '#374151',
-  },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: '50%',
-  },
-  returnValue: {
-    fontSize: 18,
-    fontWeight: 700,
-    lineHeight: 1,
-  },
-  targetPrice: {
-    fontSize: 11,
-    color: '#4b5563',
-    marginTop: 2,
-  },
-  matchInfo: {
-    fontSize: 9,
-    color: '#9ca3af',
-    marginTop: 2,
-  },
-  noData: {
-    fontSize: 10,
-    color: '#9ca3af',
-    fontStyle: 'italic',
-  },
-  // Agreement section - inline
-  agreementContainer: {
-    backgroundColor: '#f9fafb',
-    borderRadius: 6,
-    padding: '8px 10px',
-  },
-  agreementHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 6,
-  },
-  agreementTitle: {
-    fontSize: 10,
-    fontWeight: 600,
-    color: '#374151',
-  },
-  agreementLevel: {
-    fontSize: 10,
-    fontWeight: 700,
-  },
-  agreementGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: 6,
-  },
-  agreementMetric: {
-    textAlign: 'center',
-  },
-  metricLabel: {
-    fontSize: 8,
-    color: '#6b7280',
-    textTransform: 'uppercase',
-    marginBottom: 1,
-  },
-  metricValue: {
-    fontSize: 12,
-    fontWeight: 700,
-    color: '#374151',
-  },
-  warningsRow: {
-    display: 'flex',
-    gap: 4,
-    marginTop: 6,
-    flexWrap: 'wrap',
-  },
-  warningBadge: {
-    fontSize: 8,
-    padding: '2px 6px',
-    backgroundColor: '#fef3c7',
-    color: '#d97706',
-    borderRadius: 3,
-    fontWeight: 500,
-  },
-  sampleInfo: {
-    fontSize: 8,
-    color: '#9ca3af',
-    marginTop: 6,
-    textAlign: 'right',
-  },
-};
 
 /**
  * BLOCK 73.4 — Interactive Match Picker
