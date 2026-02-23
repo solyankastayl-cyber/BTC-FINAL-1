@@ -102,8 +102,7 @@ export function GlobalStructureBar({ structure, resolver }) {
             gap: '6px',
             padding: '6px 12px',
             background: '#fef3c7',
-            borderRadius: '8px',
-            border: '1px solid #fbbf24'
+            borderRadius: '8px'
           }}>
             <span style={{ fontSize: '14px' }}>⚠️</span>
             <span style={{ fontSize: '12px', fontWeight: 600, color: '#92400e' }}>
@@ -123,8 +122,7 @@ export function GlobalStructureBar({ structure, resolver }) {
           padding: '10px 16px',
           background: resolver.final?.action === 'BUY' ? '#dcfce7' :
                      resolver.final?.action === 'SELL' ? '#fee2e2' : '#f3f4f6',
-          borderRadius: '10px',
-          border: '1px solid #e5e5e5'
+          borderRadius: '10px'
         }}>
           <div>
             <div style={{ fontSize: '18px', fontWeight: 700 }}>
@@ -137,8 +135,7 @@ export function GlobalStructureBar({ structure, resolver }) {
           <div style={{
             padding: '6px 12px',
             background: '#fff',
-            borderRadius: '6px',
-            border: '1px solid #ddd'
+            borderRadius: '6px'
           }}>
             <div style={{ fontSize: '16px', fontWeight: 700 }}>
               {sizePercent}%
