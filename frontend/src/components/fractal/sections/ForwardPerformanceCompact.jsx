@@ -165,12 +165,6 @@ export function ForwardPerformanceCompact({
             {horizon}D · {mode.charAt(0).toUpperCase() + mode.slice(1)} · {execution}
           </span>
         </div>
-        
-        {data?.summary && (
-          <span style={styles.summary}>
-            Snapshots: {data.summary.snapshots || 0} · Resolved: {data.summary.resolved || 0}
-          </span>
-        )}
       </div>
 
       {/* Error */}
@@ -183,51 +177,50 @@ export function ForwardPerformanceCompact({
         <div style={styles.loading}>Loading...</div>
       )}
 
-      {/* Content */}
+      {/* Content - Horizontal Layout: Chart + Metrics */}
       {data && !loading && (
-        <>
-          {/* Chart or Empty State */}
-          {data.equity && data.equity.length > 0 ? (
-            <div style={styles.chartWrapper}>
+        <div style={styles.horizontalLayout}>
+          {/* Chart - Left side */}
+          <div style={styles.chartSection}>
+            {data.equity && data.equity.length > 0 ? (
               <canvas ref={canvasRef} style={styles.canvas} />
-            </div>
-          ) : (
-            <div style={styles.emptyState}>
-              <Activity size={32} style={{ color: '#d1d5db', marginBottom: 8 }} />
-              <span style={styles.emptyText}>No resolved trades yet for {horizon}d horizon</span>
-              <span style={styles.emptyHint}>Wait for {horizon} days after snapshot to see results</span>
-            </div>
-          )}
+            ) : (
+              <div style={styles.emptyState}>
+                <Activity size={28} style={{ color: '#d1d5db', marginBottom: 6 }} />
+                <span style={styles.emptyText}>No resolved trades yet for {horizon}d horizon</span>
+              </div>
+            )}
+          </div>
 
-          {/* Metrics Row - Single line */}
-          <div style={styles.metricsRow}>
-            <MetricPill 
+          {/* Metrics - Right side, vertical stack */}
+          <div style={styles.metricsColumn}>
+            <MetricItem 
               label="CAGR" 
               value={metrics?.cagrFormatted || '0.00%'}
               color={metrics?.cagr > 0 ? '#22c55e' : '#ef4444'}
             />
-            <MetricPill 
+            <MetricItem 
               label="Win Rate" 
               value={metrics?.winRateFormatted || '0.0%'}
               color={metrics?.winRate >= 50 ? '#22c55e' : '#f59e0b'}
             />
-            <MetricPill 
+            <MetricItem 
               label="Max DD" 
               value={metrics?.maxDDFormatted || '0.00%'}
               color={metrics?.maxDD > 25 ? '#ef4444' : '#374151'}
             />
-            <MetricPill 
+            <MetricItem 
               label="Sharpe" 
               value={metrics?.sharpe?.toFixed(2) || '0.00'}
               color={metrics?.sharpe > 1 ? '#22c55e' : '#374151'}
             />
-            <MetricPill 
+            <MetricItem 
               label="Trades" 
               value={metrics?.trades || 0}
               color="#374151"
             />
           </div>
-        </>
+        </div>
       )}
     </div>
   );
