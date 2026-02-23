@@ -88,7 +88,7 @@ export function StrategySummary({
             </span>
             <span style={{
               ...styles.modeBadge,
-              backgroundColor: getModeColor(decision.mode),
+              color: getModeColor(decision.mode),
             }}>
               {formatMode(decision.mode)}
             </span>
