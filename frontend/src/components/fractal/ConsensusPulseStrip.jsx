@@ -120,7 +120,6 @@ const DivergenceBadge = ({ grade, score }) => {
         fontSize: 11,
         fontWeight: 600,
         backgroundColor: '#f8fafc',
-        border: `1px solid ${config.color}`,
         color: config.color,
       }}
     >
