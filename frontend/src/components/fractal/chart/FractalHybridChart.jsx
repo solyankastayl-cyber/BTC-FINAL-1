@@ -444,70 +444,8 @@ function HybridSummaryPanel({ forecast, primaryMatch, currentPrice, focus, diver
     </div>
   );
 }
-            <div style={styles.noData}>No data</div>
-          )}
-        </div>
-      </div>
-
-      {/* Compact Agreement */}
-      {divergence && <AgreementSection divergence={divergence} />}
-    </div>
-  );
-}
 
 /**
- * Agreement Section - Compact metrics with tooltips
- */
-function AgreementSection({ divergence }) {
-  const { rmse, corr, terminalDelta, directionalMismatch, samplePoints, flags } = divergence;
-  
-  const getAgreementLevel = () => {
-    if (rmse <= 5 && corr >= 0.7) return { label: 'Strong', color: '#22c55e' };
-    if (rmse <= 15 && corr >= 0.4) return { label: 'Moderate', color: '#f59e0b' };
-    return { label: 'Weak', color: '#ef4444' };
-  };
-  
-  const agreement = getAgreementLevel();
-  const hasWarnings = flags?.length > 0 && !flags.includes('PERFECT_MATCH');
-
-  return (
-    <div style={styles.agreementContainer}>
-      <div style={styles.agreementHeader}>
-        <span style={styles.agreementTitle}>Model vs History</span>
-        <span style={{ ...styles.agreementLevel, color: agreement.color }}>{agreement.label}</span>
-      </div>
-      
-      <div style={styles.agreementGrid}>
-        <div style={styles.agreementMetric} title="Lower divergence = better agreement">
-          <div style={styles.metricLabel}>Diverge</div>
-          <div style={{ ...styles.metricValue, color: rmse > 20 ? '#ef4444' : '#374151' }}>
-            {rmse?.toFixed(1) || '—'}%
-          </div>
-        </div>
-        <div style={styles.agreementMetric} title="Correlation (1.0 = perfect match)">
-          <div style={styles.metricLabel}>Corr</div>
-          <div style={{ ...styles.metricValue, color: corr < 0.3 ? '#ef4444' : corr >= 0.5 ? '#22c55e' : '#374151' }}>
-            {corr?.toFixed(2) || '—'}
-          </div>
-        </div>
-        <div style={styles.agreementMetric} title="Days where model and replay agree on direction">
-          <div style={styles.metricLabel}>Direction</div>
-          <div style={styles.metricValue}>
-            {directionalMismatch != null ? `${(100 - directionalMismatch).toFixed(0)}%` : '—'}
-          </div>
-        </div>
-        <div style={styles.agreementMetric} title="Difference between endpoints">
-          <div style={styles.metricLabel}>End Diff</div>
-          <div style={styles.metricValue}>
-            {terminalDelta != null ? `${terminalDelta >= 0 ? '+' : ''}${terminalDelta.toFixed(1)}%` : '—'}
-          </div>
-        </div>
-      </div>
-
-      {hasWarnings && flags?.length > 0 && (
-        <div style={styles.warningsRow}>
-          {flags.filter(f => f !== 'PERFECT_MATCH').map((flag, i) => (
-            <span key={i} style={styles.warningBadge}>{formatWarningFlag(flag)}</span>
           ))}
         </div>
       )}
