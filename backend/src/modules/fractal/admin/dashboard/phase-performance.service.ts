@@ -531,8 +531,9 @@ export class PhasePerformanceService {
         
         // Get phase: first from snapshot field, then detect from candles
         let phase: PhaseType;
-        if ((snap as any).phase) {
-          phase = (snap as any).phase as PhaseType;
+        const snapPhase = (snap as any).phase;
+        if (snapPhase && snapPhase !== 'UNKNOWN') {
+          phase = snapPhase as PhaseType;
         } else {
           phase = await this.getPhaseForDate(symbol, snap.asOf);
         }
