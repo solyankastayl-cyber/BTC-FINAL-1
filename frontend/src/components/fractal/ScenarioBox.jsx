@@ -287,8 +287,8 @@ export function ScenarioBox({ scenario }) {
         </div>
       </div>
       
-      {/* Scenario Cards */}
-      <div className="flex flex-wrap gap-3">
+      {/* Scenario Cards - horizontal row */}
+      <div className="grid grid-cols-3 gap-2">
         {cases?.map((c, i) => (
           <ScenarioCard
             key={c.percentile}
