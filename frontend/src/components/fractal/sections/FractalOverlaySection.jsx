@@ -40,7 +40,7 @@ export function FractalOverlaySection({ symbol, focus = '30d' }) {
   return (
     <div data-testid="fractal-overlay-section" className="p-4">
       {/* FULL WIDTH CHART - No header */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+      <div className="bg-white rounded-xl p-4 mb-4">
         {loading ? (
           <div className="flex items-center justify-center h-[380px] text-slate-400">
             Loading Replay Data...
