@@ -202,13 +202,17 @@ function PositionSizing({ sizing, blockers, constitution, driftStatus }) {
   // If no critical reasons, use explain
   const displayReasons = topReasons.length > 0 ? topReasons : explain.slice(0, 3);
   
-  const hasBlockers = allBlockers.length > 0;
+  const hasBlockers = allBlockers.length > 0 || finalSize <= 0;
   
   return (
     <div className="mt-4">
-      {/* Main Size Display */}
-      <div className={`p-4 rounded-xl ${sizeBg}`}>
-        <div className="flex items-center justify-between">
+      {/* Main Size Display - with tooltip on hover */}
+      <div 
+        className={`p-4 rounded-xl ${sizeBg} relative`}
+        onMouseEnter={() => hasBlockers && setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
+        <div className="flex items-center justify-between cursor-help">
           <div className="flex items-center gap-3">
             <Scale className={`w-6 h-6 ${sizeColor}`} />
             <div>
@@ -222,38 +226,41 @@ function PositionSizing({ sizing, blockers, constitution, driftStatus }) {
             </div>
           </div>
           
-          {/* Size Badge with Tooltip */}
-          <div 
-            className={`px-4 py-2 rounded-lg ${sizeBg} relative cursor-help`}
-            onMouseEnter={() => hasBlockers && setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
-          >
+          {/* Size Badge */}
+          <div className={`px-4 py-2 rounded-lg ${sizeBg}`}>
             <span className={`text-lg font-bold ${sizeColor}`}>
               {finalSize.toFixed(2)}x
             </span>
-            
-            {/* Trading Disabled Tooltip */}
-            {showTooltip && hasBlockers && (
-              <div className="absolute right-0 top-full mt-2 z-50 w-64 p-3 bg-slate-800 rounded-lg shadow-xl text-white text-xs">
-                <div className="flex items-center gap-2 mb-2 text-red-400 font-semibold">
-                  <Ban className="w-4 h-4" />
-                  Trading Disabled
-                </div>
-                <div className="space-y-1.5">
-                  {allBlockers.map((blocker, i) => (
-                    <div key={i} className="flex items-center gap-2 text-slate-300">
-                      <XCircle className="w-3 h-3 text-red-400" />
-                      <span>{blockerExplain[blocker] || blocker}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-2 pt-2 border-t border-slate-600 text-slate-400">
-                  Position sizing at 0% until conditions improve
-                </div>
-              </div>
-            )}
           </div>
         </div>
+        
+        {/* Trading Disabled Tooltip */}
+        {showTooltip && hasBlockers && (
+          <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 w-72 p-3 bg-slate-800 rounded-lg shadow-xl text-white text-xs">
+            <div className="flex items-center gap-2 mb-2 text-red-400 font-semibold">
+              <Ban className="w-4 h-4" />
+              Trading Disabled
+            </div>
+            <div className="space-y-1.5">
+              {allBlockers.length > 0 ? (
+                allBlockers.map((blocker, i) => (
+                  <div key={i} className="flex items-center gap-2 text-slate-300">
+                    <XCircle className="w-3 h-3 text-red-400" />
+                    <span>{blockerExplain[blocker] || blocker}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center gap-2 text-slate-300">
+                  <XCircle className="w-3 h-3 text-red-400" />
+                  <span>Position size reduced to zero</span>
+                </div>
+              )}
+            </div>
+            <div className="mt-2 pt-2 border-t border-slate-600 text-slate-400">
+              Position sizing at 0% until conditions improve
+            </div>
+          </div>
+        )}
         
         {/* Reasons */}
         {displayReasons.length > 0 && (
