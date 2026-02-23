@@ -320,7 +320,6 @@ export function PhaseHeatmap({ tier = 'TACTICAL', onPhaseFilter }) {
         textAlign: 'center',
         backgroundColor: '#fef2f2',
         borderRadius: 8,
-        border: '1px solid #fecaca',
       }}>
         <div style={{ color: '#dc2626', fontSize: 13 }}>{error}</div>
       </div>
@@ -334,7 +333,6 @@ export function PhaseHeatmap({ tier = 'TACTICAL', onPhaseFilter }) {
       style={{
         backgroundColor: '#fff',
         borderRadius: 8,
-        border: '1px solid #e2e8f0',
         overflow: 'hidden',
       }}
       data-testid="phase-heatmap"
