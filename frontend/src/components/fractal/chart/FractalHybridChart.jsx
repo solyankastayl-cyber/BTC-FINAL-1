@@ -469,6 +469,7 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
       <div className="flex flex-wrap gap-x-4 gap-y-1">
         {topMatches.map((match, idx) => {
           const isSelected = match.id === selectedId;
+          const isBest = idx === 0; // First match is best (highest similarity)
           const phaseLabel = getPhaseLabel(match.phase);
           const similarity = Math.round((match.similarity || 0) * 100);
           
@@ -480,10 +481,15 @@ function MatchPicker({ matches, selectedId, primaryId, onSelect, loading }) {
               className={`
                 text-sm py-1 px-0 bg-transparent cursor-pointer transition-colors
                 ${isSelected 
-                  ? 'text-slate-900 font-semibold' 
-                  : 'text-slate-500 hover:text-slate-700'}
+                  ? 'font-semibold' 
+                  : 'hover:opacity-80'}
+                ${isBest 
+                  ? 'text-emerald-600' 
+                  : isSelected 
+                    ? 'text-slate-900' 
+                    : 'text-slate-500'}
               `}
-              title={`Click to replay this historical pattern`}
+              title={isBest ? 'Best match (highest similarity)' : 'Click to replay this historical pattern'}
             >
               {match.id} · {similarity}% · {phaseLabel}
             </button>
