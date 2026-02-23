@@ -85,7 +85,7 @@ const ForecastSummary = ({ forecast, meta }) => {
     : '—';
   
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-4" data-testid="forecast-summary">
+    <div className="bg-white rounded-lg p-4" data-testid="forecast-summary">
       <div className="text-xs font-semibold text-slate-500 uppercase mb-3">
         Expected Outcome ({meta.aftermathDays}d)
       </div>
