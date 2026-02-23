@@ -55,7 +55,7 @@ const MatchChip = ({ match, index, isSelected, isPrimary, isBest, onClick }) => 
       </span>
       
       {/* Similarity */}
-      <span className={`font-semibold ${isSelected ? 'text-emerald-300' : 'text-emerald-600'}`}>
+      <span className={`font-semibold ${isSelected ? 'text-emerald-300' : isBest ? 'text-emerald-700' : 'text-emerald-600'}`}>
         {match.similarity?.toFixed(0)}%
       </span>
       
